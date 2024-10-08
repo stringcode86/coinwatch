@@ -1,4 +1,4 @@
-# cointwatch
+# Coint Watch
 
 During the interview process there is often a task. Coin Watch is simple app that
 is a good example of such task. Written in six different ways. App allows user to
@@ -9,6 +9,7 @@ coin gecko API. Review the code
 Currently under active development. Not all code push yet. Check back in a day or 
 two
 
+## One app built six different ways:
 
 - **Web front end**. React.js, Redux front end app version of Coin Watch, review 
     [react-web-app](./react-web-app). 
