@@ -10,38 +10,32 @@ Currently under active development. Not all code push yet. Check back in a day o
 two
 
 
-## Web front end
-React.js, Redux front end app version of Coin Watch, review 
-[react-web-app](./react-web-app). 
+- **Web front end**. React.js, Redux front end app version of Coin Watch, review 
+    [react-web-app](./react-web-app). 
 
 
-## Mobile React Native (iOS & Android)
-React Native app version of Coin Watch for iOS and Android. review 
+- **Mobile React Native (iOS & Android)**. React Native app version of Coin Watch for iOS and Android. review 
 [react-native-ios-android](./react-native-ios-android).
 
 
-## iOS UIKit (with KMM)
-Kotlin multi-platform version of the app. Share core library that contains all the
+- **iOS UIKit (with KMM)**. Kotlin multi-platform version of the app. Share core library that contains all the
 business logic written in Kotlin. Compiles native binary for each platform. Vends
 view models to thin UI Layer written in Swift leveraging UIKit. UI layer sends events
 to Core library. Apps uses Viper architecture. Review
 code [kmm-ios-uikit-android-fragments](./kmm-ios-uikit-android-fragments).
 
 
-## iOS Swift UI
-Pure SwiftUI version of the app. Uses all the SwiftUI latest best practices. Review
+- **iOS Swift UI**. Pure SwiftUI version of the app. Uses all the SwiftUI latest best practices. Review
 code [ios-swift-ui](./ios-swift-ui).
 
 
-## Android View based (with KMM) 
-Kotlin multi-platform version of the app. Share core library that contains all the
+- **Android View based (with KMM)** Kotlin multi-platform version of the app. Share core library that contains all the
 business logic written in Kotlin. Compiles native binary for each platform. Vends
 view models to thin UI Views layer, leveraging Fragment. UI layer sends events to
 Core library. Apps uses Viper architecture. Review
 code [kmm-ios-uikit-android-fragments](./kmm-ios-uikit-android-fragments).
 
 
-## Android Jetpack Compose
-Pure Jetpack Compose version of the app. Uses all the Jetpack Compose latest best 
+- **Android Jetpack Compose**. Pure Jetpack Compose version of the app. Uses all the Jetpack Compose latest best 
 practices. Review code [android-jectpack-compose](./android-jectpack-compose).
 
