@@ -5,9 +5,6 @@ is a good example of such task. Written in six different ways. App allows user t
 view coins and various details about them. It allows user to bookmark coins. Uses
 coin gecko API. Review the code
 
-### NOTE
-Currently under active development. Not all code push yet. Check back in a day or 
-two
 
 ## One app built six different ways:
 
@@ -40,3 +37,7 @@ code [kmm-ios-uikit-android-fragments](./kmm-ios-uikit-android-fragments).
 - **Android Jetpack Compose**. Pure Jetpack Compose version of the app. Uses all the Jetpack Compose latest best 
 practices. Review code [android-jectpack-compose](./android-jectpack-compose).
 
+
+### NOTE
+Currently under active development. Not all code push yet. Check back in a day or
+two.
