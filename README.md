@@ -1,4 +1,4 @@
-# Coint Watch
+# Coin Watch
 
 During the interview process there is often a task. Coin Watch is simple app that
 is a good example of such task. Written in six different ways. App allows user to
@@ -12,8 +12,8 @@ coin gecko API. Review the code
     [react-web-app](./react-web-app). 
 
 
-- **Mobile React Native (iOS & Android)**. React Native app version of Coin Watch for iOS and Android. review 
-[react-native-ios-android](./react-native-ios-android).
+- **Mobile React Native (iOS, Android & Web)**. React Native app version of Coin Watch for iOS and Android. review 
+[react-native-ios-android-web](./react-native-ios-android-web).
 
 
 - **iOS UIKit (with KMM)**. Kotlin multi-platform version of the app. Share core library that contains all the
