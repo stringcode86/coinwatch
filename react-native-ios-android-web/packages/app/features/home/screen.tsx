@@ -18,39 +18,29 @@ import { useLink } from 'solito/navigation'
 import { useRouter } from 'solito/router'
 import { get as cgGet } from '../../data/coinGeckoClient/client'
 import { Market } from '../../data/coinGeckoClient/types'
+import marketsJson from '../../data/markets.json'
+import { defaultGetMarketsParams } from '../../data/coinGeckoClient/utils'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
-import marketsJson from '../../data/markets.json'
-
-
-const marketsParams = {
-  vs_currency: 'usd',
-  order: 'market_cap_desc',
-  per_page: 250,
-  page: 1,
-  sparkline: true,
-  price_change_percentage: '24h',
-  locale: 'en',
-  precision: 'full',
-}
-
 export function HomeScreen() {
-  // const marketsQuery = useQuery({
+  // const marketsQuery= useQuery({
   //   queryKey: ['/coins/markets'],
-  //   queryFn: () => cgGet<Market[]>('/coins/markets', marketsParams),
+  //   queryFn: () => cgGet<Market[]>(
+  //     '/coins/markets', {...defaultGetMarketsParams, page:2}
+  //   ),
   // })
   // const markets = marketsQuery.data
   const markets: Market[] = marketsJson
-  // console.log('[MARKETS count]', markets?.length)
+  console.log('[MARKETS count]', markets?.length)
 
   return(
     <YStack>
       <Paragraph>WTF</Paragraph>
       {
-        markets.map((market, idx) => {
+        markets?.map((market, idx) => {
           return <>
-            <Paragraph ta="center">{market.name} | {market.symbol}</Paragraph>
-            <Separator />
+            <Paragraph key={idx} ta="center">{market.name} | {market.symbol}</Paragraph>
+            <Separator key={`sp-${idx}`} />
           </>
         })
       }
