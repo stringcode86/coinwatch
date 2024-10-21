@@ -35,11 +35,10 @@ yarn-error.log*
 .yarn/cache
 .yarn/versions
 .yarn/install-state.gz
+#yarn.lock
+#react-native-ios-android-web/yarn.lock
 
 dist/out-tsc/*
-react-native-ios-android-web/yarn.lock
-
-yarn.lock
 
 # ci
 .ci-cache/
