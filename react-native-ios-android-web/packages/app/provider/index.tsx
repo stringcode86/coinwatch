@@ -8,6 +8,11 @@ import {
   isWeb,
 } from '@my/ui'
 import { ToastViewport } from './ToastViewport'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { QueryClient } from '@tanstack/react-query'
+
+const queryClient = new QueryClient();
+console.log('[CREATING NEW QUERY CLIENT] !!!!!')
 
 export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'config'>) {
   const colorScheme = useColorScheme()
@@ -23,7 +28,9 @@ export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'conf
         duration={6000}
         native={isWeb ? [] : ['mobile']}
       >
-        {children}
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
         <CustomToast />
         <ToastViewport />
       </ToastProvider>

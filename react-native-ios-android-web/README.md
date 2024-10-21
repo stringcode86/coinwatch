@@ -102,3 +102,8 @@ You may potentially want to have the native module transpiled for the next app. 
 - Install command to be `yarn set version stable && yarn install`
 - Build command: leave default setting
 - Output dir: leave default setting
+
+
+# =============================================================================
+
+create native apps `cd apps/expo & npx expo prebuild`

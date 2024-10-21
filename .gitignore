@@ -37,6 +37,9 @@ yarn-error.log*
 .yarn/install-state.gz
 
 dist/out-tsc/*
+react-native-ios-android-web/yarn.lock
+
+yarn.lock
 
 # ci
 .ci-cache/
@@ -46,3 +49,4 @@ dist/out-tsc/*
 
 # Vercel
 .vercel
+
