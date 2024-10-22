@@ -1,21 +1,11 @@
 import { Button, Paragraph, YStack } from '@my/ui'
 import { ChevronLeft } from '@tamagui/lucide-icons'
 import { useRouter } from 'solito/navigation'
-import { useQuery} from "@tanstack/react-query";
-import { get as cgGet } from "app/data/coinGeckoClient/client";
-import { Market } from "app/data/coinGeckoClient/types";
-import { defaultGetMarketsParams } from "app/data/coinGeckoClient/utils";
+import { useMarket } from "app/features/market/hooks"
 
 export function MarketDetailScreen({ id }: { id: string }) {
   const router = useRouter()
-  const markets = useQuery({
-    queryKey: ['/coins/markets', id],
-    queryFn: ({queryKey}) => cgGet<Market[]>(
-      queryKey[0] as string, {...defaultGetMarketsParams, ids: id}
-    ),
-  })
-
-  const market = markets.data?.[0]
+  const { market } = useMarket(id)
   console.log('[ID]', id, market)
 
   return (
