@@ -3,13 +3,23 @@ import { useRef, useState } from 'react'
 import { FlatList, type LayoutChangeEvent } from 'react-native'
 import { Market } from '../../data/coinGeckoClient/types'
 import { smallCardSizeAndColCnt } from '../../utils/smallCardSize'
-import {Paragraph, YStack} from "@my/ui";
+import { Paragraph, YStack } from "@my/ui";
+import {Link} from "solito/link";
 
-const MarketCard = ({name, symbol, width=100}: {name: string, symbol: string, width: number}) => {
+type MarketCardProps = {
+  id: string,
+  name: string,
+  symbol: string,
+  width: number
+}
+
+const MarketCard = ({id, name, symbol, width=100}: MarketCardProps) => {
   return(
     <YStack width={width} style={{aspectRatio: 1, border: "1px solid black", backgroundColor: 'aqua'}}>
-      <Paragraph>{name}</Paragraph>
-      <Paragraph>{symbol}</Paragraph>
+      <Link href={`/market/${id}`}>
+        <Paragraph>{name}</Paragraph>
+        <Paragraph>{symbol}</Paragraph>
+      </Link>
     </YStack>
   )
 }
@@ -29,15 +39,15 @@ const MarketList = ({ markets , onEndReached }: MarketListProps) => {
     setCellWidth(dims.width);
     setColNum(dims.colCount);
     console.log('[ONLAYOUT]', dims)
-  };
+  }
 
   return (
     <FlatList
-      onLayout={onLayout}
       key={`FlatList-${colNum}`}
       data={markets}
       renderItem={({item}) => (
         <MarketCard
+          id={item.id}
           name={item.name}
           symbol={item.symbol}
           width={cellWidth}
@@ -54,6 +64,7 @@ const MarketList = ({ markets , onEndReached }: MarketListProps) => {
       columnWrapperStyle={{
         justifyContent: 'space-evenly',
       }}
+      onLayout={onLayout}
     />
   );
 };
