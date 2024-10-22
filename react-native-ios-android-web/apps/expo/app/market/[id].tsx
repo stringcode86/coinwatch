@@ -1,4 +1,4 @@
-import { UserDetailScreen } from 'app/features/user/detail-screen'
+import { MarketDetailScreen } from 'app/features/market/market-detail-screen'
 import { Stack } from 'expo-router'
 import { useParams } from 'solito/navigation'
 
@@ -8,14 +8,14 @@ export default function Screen() {
     <>
       <Stack.Screen
         options={{
-          title: 'User',
-          presentation: 'modal',
-          animation: 'slide_from_right',
+          title: 'Old Home Screen',
+          presentation: 'card',
+          animation: 'simple_push',
           gestureEnabled: true,
           gestureDirection: 'horizontal',
         }}
       />
-      <UserDetailScreen id={id as string} />
+      <MarketDetailScreen id={id as string} />
     </>
   )
 }

@@ -57,10 +57,10 @@ test('Next.js build completes', async () => {
     // Check for specific route patterns
     expect(result).toContain('○ /')
     expect(result).toContain('○ /_not-found')
-    expect(result).toContain('ƒ /user/[id]')
+    expect(result).toContain('ƒ /market/[id]')
     expect(result).toContain('/_app')
-    expect(result).toContain('/pages-example')
-    expect(result).toContain('/pages-example-user/[id]')
+    expect(result).toContain('/pages-home')
+    expect(result).toContain('/pages-market/[id]')
 
     // Check for chunk information
     expect(result).toContain('chunks/framework-')

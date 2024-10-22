@@ -5,6 +5,7 @@ const DEFAULT_HEADERS = {
   'accept': 'application/json',
   'x-cg-demo-api-key': ENV.coinGeckoApiKey
 }
+const DEBUG = true
 
 export function get<T>(
   path: string,
@@ -19,6 +20,7 @@ export function get<T>(
     }
     path += '?' + searchParams.toString()
   }
+  DEBUG ? console.log(`[GET] ${BASE_URL}${path}`) : null
   return fetch(`${BASE_URL}${path}`, {headers: {...DEFAULT_HEADERS} })
     .then((value) => value.json() as T)
 }

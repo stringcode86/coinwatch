@@ -5,7 +5,7 @@ export const SwitchRouterButton = ({ pagesMode = false }: { pagesMode?: boolean 
     <Anchor
       ta="center"
       color="$color12"
-      href={pagesMode ? '/' : '/pages-example'}
+      href={pagesMode ? '/' : '/pages-home'}
     >
       <Button>Change router: {pagesMode ? 'pages' : 'app'}</Button>
     </Anchor>

@@ -1,4 +1,4 @@
-import { UserDetailScreen } from 'app/features/user/detail-screen'
+import { MarketDetailScreen } from 'app/features/market/market-detail-screen'
 import Head from 'next/head'
 import { createParam } from 'solito'
 
@@ -9,9 +9,9 @@ export default function Page() {
   return (
     <>
       <Head>
-        <title>User</title>
+        <title>{id}</title>
       </Head>
-      <UserDetailScreen id={id} />
+      <MarketDetailScreen id={id} />
     </>
   )
 }
