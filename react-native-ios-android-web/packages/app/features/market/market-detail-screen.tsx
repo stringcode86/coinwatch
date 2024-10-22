@@ -1,4 +1,4 @@
-import { Button, Paragraph, YStack } from '@my/ui'
+import {Button, Container, Paragraph } from '@my/ui'
 import { ChevronLeft } from '@tamagui/lucide-icons'
 import { useRouter } from 'solito/navigation'
 import { useMarket } from "app/features/market/hooks"
@@ -9,7 +9,7 @@ export function MarketDetailScreen({ id }: { id: string }) {
   console.log('[ID]', id, market)
 
   return (
-    <YStack
+    <Container
       f={1}
       jc="center"
       ai="center"
@@ -27,6 +27,6 @@ export function MarketDetailScreen({ id }: { id: string }) {
       >
         Go Home
       </Button>
-    </YStack>
+    </Container>
   )
 }

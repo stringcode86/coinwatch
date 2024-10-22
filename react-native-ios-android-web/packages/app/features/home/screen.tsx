@@ -10,8 +10,9 @@ import {
   SwitchRouterButton,
   XStack,
   YStack,
+  Container,
 } from '@my/ui'
-import { ChevronDown, ChevronUp, X } from '@tamagui/lucide-icons'
+import {ChevronDown, ChevronUp, Container as ContainerIcon, X} from '@tamagui/lucide-icons'
 import { useState } from 'react'
 import { Platform, TextInput } from 'react-native'
 import { useLink } from 'solito/navigation'
@@ -29,7 +30,7 @@ export function HomeScreen() {
   console.log('[SEARCH COINS count]', coins.length)
 
   return (
-    <YStack maxHeight='100vh'>
+    <Container maxHeight='100vh'>
       <Paragraph>Coin watch</Paragraph>
       <TextInput
         onChangeText={(text) => setSearchTerm(text)}
@@ -40,7 +41,7 @@ export function HomeScreen() {
         onEndReached={() => !isFetching && fetchNextPage()}
       />
       {(isFetching) ? <Paragraph>Loading</Paragraph> : null}
-    </YStack>
+    </Container>
   )
 }
 

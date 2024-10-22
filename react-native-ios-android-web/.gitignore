@@ -48,7 +48,4 @@ thumbs.db
 **/.turbo/*
 
 
-packages/app/data/markets.json
-packages/app/data/search.json
-packages/app/data/trending.json
-packages/app/data/run.sh
+tmp

@@ -9,7 +9,7 @@ import {
   SwitchThemeButton,
   SwitchRouterButton,
   XStack,
-  YStack,
+  YStack, Container,
 } from '@my/ui'
 import { useTrending } from 'app/features/trending/hooks'
 
@@ -20,9 +20,9 @@ export function TrendingScreen() {
   console.log('[TRENDING COIN RESULT]', coins.length)
 
   return (
-    <YStack maxHeight='100vh'>
+    <Container maxHeight='100vh'>
       <Paragraph>Trending screen {coins.length}</Paragraph>
-    </YStack>
+    </Container>
   )
 }
 
