@@ -1,0 +1,19 @@
+{
+  "expo": {
+    "name": "coin_watch",
+    "slug": "coin_watch",
+    "version": "1.0.0",
+    "sdkVersion": "51.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "android": {
+      "package": "uk.com.stringcode.coinwatch"
+    },
+    "ios": {
+      "bundleIdentifier": "uk.com.stringcode.coinwatch"
+    }
+  }
+}
