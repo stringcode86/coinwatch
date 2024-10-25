@@ -16,6 +16,7 @@ export function useMarkets(): {
     getNextPageParam: (lastPage, pages) => pages.length + 1,
     initialPageParam: 1,
     placeholderData: keepPreviousData,
+    staleTime: 300
   })
 
   const markets: Market[] = data?.pages.reduce((a, c) => [...a, ...c], []) ?? []

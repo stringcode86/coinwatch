@@ -11,6 +11,8 @@ import {
   XStack,
   YStack,
   Container,
+  Main,
+  Spinner,
 } from '@my/ui'
 import {ChevronDown, ChevronUp, Container as ContainerIcon, X} from '@tamagui/lucide-icons'
 import { useState } from 'react'
@@ -30,7 +32,7 @@ export function HomeScreen() {
   console.log('[SEARCH COINS count]', coins.length)
 
   return (
-    <Container maxHeight='100vh'>
+    <Main maxHeight="100vh">
       <Paragraph>Coin watch</Paragraph>
       <TextInput
         onChangeText={(text) => setSearchTerm(text)}
@@ -40,8 +42,8 @@ export function HomeScreen() {
         markets={markets}
         onEndReached={() => !isFetching && fetchNextPage()}
       />
-      {(isFetching) ? <Paragraph>Loading</Paragraph> : null}
-    </Container>
+      {(isFetching) ? <Spinner size='large'/> : null}
+    </Main>
   )
 }
 
