@@ -6,7 +6,9 @@ export function useTrending(): { coins: Coin[] } {
   const trendingQuery = useQuery({
     queryKey: ['/search/trending'],
     queryFn: ({queryKey}) => cgGet<SearchResult>(queryKey[0] as string, {}),
+    staleTime: 6000
   })
 
   return { coins: trendingQuery.data?.coins ?? [] }
 }
+

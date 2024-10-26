@@ -1,28 +1,16 @@
-import {
-  Anchor,
-  Button,
-  H1,
-  Paragraph,
-  Separator,
-  Sheet,
-  useToastController,
-  SwitchThemeButton,
-  SwitchRouterButton,
-  XStack,
-  YStack, Container,
-} from '@my/ui'
+import { Main, Spinner } from '@my/ui'
 import { useTrending } from 'app/features/trending/hooks'
-
+import { useMarkets } from "app/features/home/hooks";
+import MarketList from "app/components/MarketList";
 
 export function TrendingScreen() {
   const { coins } = useTrending()
-
-  console.log('[TRENDING COIN RESULT]', coins.length)
+  const { markets, isFetching } = useMarkets(coins.map(({item}) => item.id))
 
   return (
-    <Container maxHeight='100vh'>
-      <Paragraph>Trending screen {coins.length}</Paragraph>
-    </Container>
+    <Main maxHeight="100vh">
+      <MarketList markets={markets}/>
+      {(isFetching) ? <Spinner size='large'/> : null}
+    </Main>
   )
 }
-

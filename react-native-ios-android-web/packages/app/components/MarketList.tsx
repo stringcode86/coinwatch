@@ -4,7 +4,7 @@ import { FlatList, type LayoutChangeEvent } from 'react-native'
 import { Market } from 'app/data/coinGeckoClient/types'
 import { smallCardSizeAndColCnt } from 'app/utils/smallCardSize'
 import { useRouter } from "solito/navigation";
-import { MarketCard } from 'app/features/home/MarketCard'
+import { MarketCard } from 'app/components/MarketCard'
 
 type MarketListProps = {
   markets: Market[];

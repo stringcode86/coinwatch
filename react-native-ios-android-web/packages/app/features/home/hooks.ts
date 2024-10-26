@@ -3,15 +3,15 @@ import { keepPreviousData, useInfiniteQuery, useQuery } from "@tanstack/react-qu
 import { get as cgGet } from "app/data/coinGeckoClient/client";
 import {defaultGetMarketsParams} from "app/data/coinGeckoClient/utils";
 
-export function useMarkets(): {
+export function useMarkets(ids: string[] | null = null): {
   markets: Market[],
   isFetching: boolean,
   fetchNextPage: () => void,
 } {
   const {data, fetchNextPage, isFetching, isFetchingNextPage} = useInfiniteQuery({
-    queryKey: ['/coins/markets'],
+    queryKey: ['/coins/markets', ids],
     queryFn: ({pageParam}) => cgGet<Market[]>(
-      '/coins/markets', {...defaultGetMarketsParams, page: pageParam as number}
+      '/coins/markets', {...defaultGetMarketsParams, ids: ids, page: pageParam as number}
     ),
     getNextPageParam: (lastPage, pages) => pages.length + 1,
     initialPageParam: 1,

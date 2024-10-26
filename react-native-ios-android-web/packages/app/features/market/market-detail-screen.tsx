@@ -26,6 +26,7 @@ export function MarketDetailScreen({ id }: { id: string }) {
     () => (market?.price_change_percentage_24h ?? 1) > 0,
     [market?.price_change_percentage_24h]
   )
+
   const theme = useTheme()
   const chartColor = up ? theme.green10.get() : theme.red10.get()
 

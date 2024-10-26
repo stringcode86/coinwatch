@@ -8,7 +8,7 @@ export default function Screen() {
     <>
       <Stack.Screen
         options={{
-          title: 'Old Home Screen',
+          title: `Detail`,
           presentation: 'card',
           animation: 'simple_push',
           gestureEnabled: true,
