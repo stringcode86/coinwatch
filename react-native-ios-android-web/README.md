@@ -108,6 +108,8 @@ You may potentially want to have the native module transpiled for the next app. 
 
 create native apps `cd apps/expo & npx expo prebuild`
 
-- Search
+- Pull to search
+- Pull to refresh
 - Persists favorites selection
 - Fix build on M1
+

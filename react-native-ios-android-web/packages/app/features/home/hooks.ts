@@ -28,7 +28,10 @@ export function useMarkets(ids: string[] | null = null): {
   }
 }
 
-export function useSearchCoins(searchTerm: string): { coins: Coin[] } {
+export function useSearchCoins(searchTerm: string): {
+  coins: Coin[]
+  isFetching: boolean
+} {
   const searchQuery = useQuery({
     queryKey: ['/search', searchTerm],
     queryFn: ({queryKey}) => cgGet<SearchResult>(
@@ -40,5 +43,5 @@ export function useSearchCoins(searchTerm: string): { coins: Coin[] } {
 
   const searchCoins: Coin[] = searchQuery.data?.coins ?? []
 
-  return {coins: searchCoins}
+  return { coins: searchCoins, isFetching: searchQuery.isFetching }
 }
