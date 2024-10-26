@@ -16,7 +16,7 @@ export function useMarkets(): {
     getNextPageParam: (lastPage, pages) => pages.length + 1,
     initialPageParam: 1,
     placeholderData: keepPreviousData,
-    staleTime: 300
+    staleTime: 60000
   })
 
   const markets: Market[] = data?.pages.reduce((a, c) => [...a, ...c], []) ?? []
@@ -34,7 +34,8 @@ export function useSearchCoins(searchTerm: string): { coins: Coin[] } {
     queryFn: ({queryKey}) => cgGet<SearchResult>(
       queryKey[0] as string, {query: queryKey[1] as string}
     ),
-    enabled: searchTerm != ''
+    enabled: searchTerm != '',
+    staleTime: 60000
   })
 
   const searchCoins: Coin[] = searchQuery.data?.coins ?? []

@@ -9,6 +9,7 @@ export function useMarket(id: string): { market: Market | null } {
     queryFn: ({queryKey}) => cgGet<Market[]>(
       queryKey[0] as string, {...defaultGetMarketsParams, ids: id}
     ),
+    staleTime: 60000,
   })
 
   return { market: markets.data?.[0] ?? null }
