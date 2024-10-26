@@ -1,5 +1,5 @@
 import { getTokenValue } from '@tamagui/core'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { FlatList, type LayoutChangeEvent } from 'react-native'
 import { Market } from 'app/data/coinGeckoClient/types'
 import { smallCardSizeAndColCnt } from 'app/utils/smallCardSize'
@@ -7,11 +7,13 @@ import { useRouter } from "solito/navigation";
 import { MarketCard } from 'app/components/MarketCard'
 
 type MarketListProps = {
-  markets: Market[];
-  onEndReached?: () => void;
-};
+  markets: Market[],
+  header?: React.ReactElement,
+  footer?: React.ReactElement,
+  onEndReached?: () => void,
+}
 
-const MarketList = ({markets, onEndReached}: MarketListProps) => {
+const MarketList = ({markets, header, footer, onEndReached}: MarketListProps) => {
   const router = useRouter()
   const [prevWidth, setPrevWidth] = useState(0)
   const [cellWidth, setCellWidth] = useState(300)
@@ -39,14 +41,16 @@ const MarketList = ({markets, onEndReached}: MarketListProps) => {
         />
       )}
       keyExtractor={(market) => `${colNum}-${market.id}`}
-      onEndReached={onEndReached}
       numColumns={colNum}
+      ListHeaderComponent={header}
+      ListFooterComponent={footer}
+      onEndReached={onEndReached}
       columnWrapperStyle={{ justifyContent: 'space-evenly' }}
       contentContainerStyle={{
         gap: space,
-        paddingTop: space,
-        paddingBottom: space,
+        paddingVertical: space,
       }}
+      contentOffset={{ x: 0, y: 44 + 18 }}
       onLayout={onLayout}
     />
   );

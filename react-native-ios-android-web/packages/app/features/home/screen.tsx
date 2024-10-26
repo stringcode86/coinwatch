@@ -15,16 +15,21 @@ export function HomeScreen() {
 
   return (
     <Main maxHeight="100vh" gap="$4">
-      <Paragraph>Coin watch</Paragraph>
-      <Input
-        onChangeText={(text) => setSearchTerm(text)}
-        value={searchTerm}
-      />
       <MarketList
-        markets={markets}
+        markets={ (searchTerm != '' && (coins.isFetching || isFetching)) ? [] : markets }
+        header={
+          <Input
+            onChangeText={(text) => setSearchTerm(text)}
+            on
+            value={searchTerm}
+            marginHorizontal="$3"
+          />
+        }
+        footer={
+          (isFetching || coins.isFetching) ? <Spinner size='large' p="$4"/> : undefined
+        }
         onEndReached={() => !isFetching && searchTerm == '' && fetchNextPage()}
       />
-      {(isFetching || coins.isFetching) ? <Spinner size='large'/> : null}
     </Main>
   )
 }
