@@ -52,6 +52,7 @@ export const MarketCard = memo(({market, width = 100, onPress }: MarketCardProps
       p={pad}
       elevate
       onPress={onPress}
+      bg="$background"
     >
       <Card.Background overflow={'hidden'} paddingTop="70%">
         <LinearGradient
