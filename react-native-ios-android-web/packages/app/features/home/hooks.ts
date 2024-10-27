@@ -1,17 +1,22 @@
 import { Coin, Market, SearchResult } from "app/data/coinGeckoClient/types";
-import { keepPreviousData, useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useInfiniteQuery, useQuery, UseQueryResult } from "@tanstack/react-query";
 import { get as cgGet } from "app/data/coinGeckoClient/client";
-import {defaultGetMarketsParams} from "app/data/coinGeckoClient/utils";
+import { defaultGetMarketsParams } from "app/data/coinGeckoClient/utils";
+import { UseInfiniteQueryResult } from "@tanstack/react-query/src/types";
+import { useMemo } from "react";
 
 export function useMarkets(ids: string[] | null = null): {
   markets: Market[],
-  isFetching: boolean,
-  fetchNextPage: () => void,
+  marketsQuery: UseInfiniteQueryResult
 } {
-  const {data, fetchNextPage, isFetching, isFetchingNextPage} = useInfiniteQuery({
+  const query = useInfiniteQuery({
     queryKey: ['/coins/markets', ids],
     queryFn: ({pageParam}) => cgGet<Market[]>(
-      '/coins/markets', {...defaultGetMarketsParams, ids: ids, page: pageParam as number}
+      '/coins/markets', {
+        ...defaultGetMarketsParams,
+        ids: ids as any,
+        page: pageParam as number
+      }
     ),
     getNextPageParam: (lastPage, pages) => pages.length + 1,
     initialPageParam: 1,
@@ -19,18 +24,21 @@ export function useMarkets(ids: string[] | null = null): {
     staleTime: 60000
   })
 
-  const markets: Market[] = data?.pages.reduce((a, c) => [...a, ...c], []) ?? []
+  const markets: Market[] = useMemo(
+    () => query.data?.pages.reduce((a, c) => [...a, ...c], []) ?? [],
+    [query.data?.pages]
+  )
 
   return {
     markets: markets,
-    isFetching: isFetching || isFetchingNextPage,
-    fetchNextPage: fetchNextPage
+    marketsQuery: query,
   }
 }
 
 export function useSearchCoins(searchTerm: string): {
+  coinIds: string[]
   coins: Coin[]
-  isFetching: boolean
+  coinsQuery: UseQueryResult
 } {
   const searchQuery = useQuery({
     queryKey: ['/search', searchTerm],
@@ -42,6 +50,9 @@ export function useSearchCoins(searchTerm: string): {
   })
 
   const searchCoins: Coin[] = searchQuery.data?.coins ?? []
-
-  return { coins: searchCoins, isFetching: searchQuery.isFetching }
+  const ids: string[] | null = useMemo(
+    () => searchCoins.map(item => item.id).filter(item => item),
+    [searchCoins]
+  )
+  return { coinIds: ids, coins: searchCoins, coinsQuery: searchQuery }
 }

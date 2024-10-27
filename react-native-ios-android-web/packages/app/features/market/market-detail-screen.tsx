@@ -17,27 +17,33 @@ import { NumericFormat } from "react-number-format";
 import { abbreviateNumber } from "app/utils/abbreviateNumber";
 import { LineChart } from "react-native-svg-charts";
 import { useTheme } from "@tamagui/core";
-import { useMemo } from "react";
 import { Market } from 'app/data/coinGeckoClient/types'
+import { RefreshControl } from "react-native";
 
 export function MarketDetailScreen({ id }: { id: string }) {
-  const { market } = useMarket(id)
-  const up = useMemo(
-    () => (market?.price_change_percentage_24h ?? 1) > 0,
-    [market?.price_change_percentage_24h]
-  )
-
+  const { market, marketQuery } = useMarket(id)
+  const up = (market?.price_change_percentage_24h ?? 1) > 0
   const theme = useTheme()
   const chartColor = up ? theme.green10.get() : theme.red10.get()
 
   return (
-    <ScrollView p="$4" contentContainerStyle={{ flexGrow: 1}}>
+    <ScrollView
+      p="$4"
+      contentContainerStyle={{ flexGrow: 1}}
+      refreshControl={
+        <RefreshControl
+          onRefresh={marketQuery.refetch}
+          refreshing={marketQuery.isFetching}
+        />
+      }
+    >
       <Container gap="$4" maw="860px" w="100%" style={{ margin: "0 auto" }}>
         <Header market={market}/>
         <Separator/>
+
         <YStack
-          $gtXs={{flexDirection: 'row', flex: 1, alignItems: "flex-start"}}
           gap="$4"
+          $gtXs={{flexDirection: 'row', flex: 1, alignItems: "flex-start"}}
         >
           <LineChart
             data={market?.sparkline_in_7d.price ?? []}
@@ -47,6 +53,7 @@ export function MarketDetailScreen({ id }: { id: string }) {
           <Separator $gtXs={{display: "none"}}/>
           <Details market={market} pctCol={chartColor}/>
         </YStack>
+
         <View/>
       </Container>
     </ScrollView>

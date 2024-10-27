@@ -10,10 +10,17 @@ type MarketListProps = {
   markets: Market[],
   header?: React.ReactElement,
   footer?: React.ReactElement,
+  refreshControl?: React.ReactElement,
   onEndReached?: () => void,
 }
 
-const MarketList = ({markets, header, footer, onEndReached}: MarketListProps) => {
+const MarketList = ({
+  markets,
+  header,
+  footer,
+  refreshControl,
+  onEndReached,
+}: MarketListProps) => {
   const router = useRouter()
   const [prevWidth, setPrevWidth] = useState(0)
   const [cellWidth, setCellWidth] = useState(300)
@@ -44,6 +51,7 @@ const MarketList = ({markets, header, footer, onEndReached}: MarketListProps) =>
       numColumns={colNum}
       ListHeaderComponent={header}
       ListFooterComponent={footer}
+      refreshControl={refreshControl}
       onEndReached={onEndReached}
       columnWrapperStyle={{ justifyContent: 'space-evenly' }}
       contentContainerStyle={{

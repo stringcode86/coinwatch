@@ -1,14 +1,26 @@
-import { useQuery} from "@tanstack/react-query";
+import { useMemo } from "react";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { get as cgGet} from "app/data/coinGeckoClient/client";
 import { Coin, SearchResult } from "app/data/coinGeckoClient/types";
 
-export function useTrending(): { coins: Coin[] } {
+export function useTrending(): {
+  trending: Coin[]
+  trendingIds: string[]
+  trendingQuery: UseQueryResult
+} {
   const trendingQuery = useQuery({
     queryKey: ['/search/trending'],
     queryFn: ({queryKey}) => cgGet<SearchResult>(queryKey[0] as string, {}),
     staleTime: 6000
   })
 
-  return { coins: trendingQuery.data?.coins ?? [] }
+  const trendingCoins: Coin[] = trendingQuery.data?.coins ?? []
+  const ids: string[] = trendingCoins.map(({item}) => item.id).filter(item => item)
+
+  return {
+    trending: trendingCoins,
+    trendingIds: ids,
+    trendingQuery: trendingQuery
+  }
 }
 

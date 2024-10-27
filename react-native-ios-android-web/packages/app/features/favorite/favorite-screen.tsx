@@ -1,15 +1,27 @@
 import { Main, Spinner } from '@my/ui'
 import { useMarkets } from "app/features/home/hooks";
 import MarketList from "app/components/MarketList";
+import {RefreshControl} from "react-native";
 
 export function FavoriteScreen() {
   const coins = ['ethereum', 'solana', 'bitcoin']
-  const { markets, isFetching } = useMarkets(coins)
+  const { markets, marketsQuery } = useMarkets(coins)
+  const isFetching = marketsQuery.isFetching
 
   return (
     <Main maxHeight="100vh">
-      <MarketList markets={markets}/>
-      {(isFetching) ? <Spinner size='large'/> : null}
+      <MarketList
+        markets={ isFetching ? [] : markets }
+        footer={
+          isFetching ? <Spinner size='large'/> : undefined
+        }
+        refreshControl={
+          <RefreshControl
+            onRefresh={marketsQuery.refetch}
+            refreshing={isFetching}
+          />
+        }
+      />
     </Main>
   )
 }

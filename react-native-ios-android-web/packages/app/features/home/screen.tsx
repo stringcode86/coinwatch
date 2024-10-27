@@ -1,34 +1,42 @@
-import {Paragraph, Main, Spinner, Input } from '@my/ui'
-import {useMemo, useState} from 'react'
+import {Main, Spinner, Input, XStack, SizableText} from '@my/ui'
+import {useState} from 'react'
 import useDebouncedValue from "app/utils/debounce";
 import MarketList from 'app/components/MarketList'
 import { useMarkets, useSearchCoins } from 'app/features/home/hooks'
+import { RefreshControl } from 'react-native'
 
 export function HomeScreen() {
   const [searchTerm, setSearchTerm] = useState('');
-  const coins = useSearchCoins(useDebouncedValue(searchTerm, 300))
-  const ids: string[] | null = useMemo(
-    () => coins.coins.map(item => item.id).filter(item => item),
-    [coins]
-  )
-  const { markets, isFetching, fetchNextPage } = useMarkets(ids)
+  const { coinIds, coinsQuery } = useSearchCoins(useDebouncedValue(searchTerm, 300))
+  const { markets, marketsQuery } = useMarkets(coinIds)
+  const isFetching = coinsQuery.isFetching || marketsQuery.isFetching
 
   return (
     <Main maxHeight="100vh" gap="$4">
       <MarketList
-        markets={ (searchTerm != '' && (coins.isFetching || isFetching)) ? [] : markets }
+        markets={ (searchTerm != '' && isFetching) ? [] : markets }
         header={
-          <Input
-            onChangeText={(text) => setSearchTerm(text)}
-            on
-            value={searchTerm}
-            marginHorizontal="$3"
-          />
+          <XStack>
+            <Input
+              f={1}
+              onChangeText={(text) => setSearchTerm(text)}
+              value={searchTerm}
+              marginHorizontal="$3"
+            />
+            <SizableText>{markets.length}</SizableText>
+          </XStack>
         }
         footer={
-          (isFetching || coins.isFetching) ? <Spinner size='large' p="$4"/> : undefined
+          isFetching ? <Spinner size='large' p="$4"/> : undefined
         }
-        onEndReached={() => !isFetching && searchTerm == '' && fetchNextPage()}
+        refreshControl={
+          (markets.length > 0)
+            ? <RefreshControl onRefresh={marketsQuery.refetch} refreshing={isFetching}/>
+            : undefined
+        }
+        onEndReached={
+          () => !isFetching && searchTerm == '' && marketsQuery.fetchNextPage()
+      }
       />
     </Main>
   )

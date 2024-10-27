@@ -108,9 +108,7 @@ You may potentially want to have the native module transpiled for the next app. 
 
 create native apps `cd apps/expo & npx expo prebuild`
 
-- Pull to refresh
 - Optimize layout
-- Clean up code in home
 - Persists favorites selection
 - Switch to Tab nav
 - Add web top nav
