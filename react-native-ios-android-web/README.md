@@ -109,11 +109,13 @@ You may potentially want to have the native module transpiled for the next app. 
 create native apps `cd apps/expo & npx expo prebuild`
 
 - Persists favorites selection
-- Switch to different chart
-- Switch to Tab nav
 - Add web top nav
 - Fix build on M1
 - Optimize layout
 - Fix slow typing
+- Switch to different chart
+- Update readme
+- Update site
+
 
 

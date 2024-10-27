@@ -78,14 +78,14 @@ export const MarketCard = memo(({market, width = 100, onPress }: MarketCardProps
       </XStack>
 
       <View f={1}>
-        {/*<LineChart*/}
-        {/*  data={market.sparkline_in_7d?.price ?? []}*/}
-        {/*  style={{height: '100%'}}*/}
-        {/*  svg={{ stroke: chartColor, strokeWidth: 2 }}*/}
-        {/*  contentInset={{ top: sm ? 8 : 16, bottom: sm ? 4 : 8 }}*/}
-        {/*  animate={true}*/}
-        {/*/>*/}
-        <SizableText>Chart</SizableText>
+        <LineChart
+          data={market.sparkline_in_7d?.price ?? []}
+          style={{height: '100%'}}
+          svg={{ stroke: chartColor, strokeWidth: 2 }}
+          contentInset={{ top: sm ? 8 : 16, bottom: sm ? 4 : 8 }}
+          animate={true}
+        />
+        {/*<SizableText>Chart</SizableText>*/}
       </View>
 
       <Card.Footer>

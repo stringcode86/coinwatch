@@ -44,6 +44,12 @@ function SearchHeader(debouncedTextHandler:(text: string) => void) {
   }, [term, 300])
 
   return (
-    <Input onChangeText={(text) => setTerm(text)} value={term} mx="$3"/>
+    <Input
+      onChangeText={(text) => setTerm(text)}
+      value={term}
+      placeholder="Search coins"
+      clearButtonMode="while-editing"
+      mx="$3"
+    />
   )
 }
