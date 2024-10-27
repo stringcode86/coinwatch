@@ -1,9 +1,9 @@
-import {Main, Spinner, Input, XStack, SizableText} from '@my/ui'
-import {useCallback, useEffect, useImperativeHandle, useRef, useState} from 'react'
-import useDebouncedValue from "app/utils/debounce";
+import {Main, Spinner, Input } from '@my/ui'
+import { useEffect, useState} from 'react'
 import MarketList from 'app/components/MarketList'
 import { useMarkets, useSearchCoins } from 'app/features/home/hooks'
-import {LayoutChangeEvent, RefreshControl} from 'react-native'
+import { RefreshControl} from 'react-native'
+import UNav from "app/components/UNav";
 
 export function HomeScreen() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -15,6 +15,7 @@ export function HomeScreen() {
 
   return (
     <Main maxHeight="100vh" gap="$4">
+      <UNav/>
       <MarketList
         markets={ (searchTerm != '' && isFetching) ? [] : markets }
         header={ SearchHeader((text) => setSearchTerm(text)) }
@@ -49,7 +50,7 @@ function SearchHeader(debouncedTextHandler:(text: string) => void) {
       value={term}
       placeholder="Search coins"
       clearButtonMode="while-editing"
-      mx="$3"
+      mx="$4"
     />
   )
 }

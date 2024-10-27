@@ -22,7 +22,7 @@ export function OldHomeScreen({ pagesMode = false }: { pagesMode?: boolean }) {
   const linkTarget = pagesMode ? '/pages-market' : '/market'
   const linkProps = useLink({href: `${linkTarget}/nate`})
   // const router = useRouter()
-
+  console.log('[linkProps]', linkProps)
   return (
     <YStack
       f={1}

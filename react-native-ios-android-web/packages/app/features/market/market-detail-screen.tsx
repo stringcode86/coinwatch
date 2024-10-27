@@ -19,6 +19,7 @@ import { LineChart } from "react-native-svg-charts";
 import { useTheme } from "@tamagui/core";
 import { Market } from 'app/data/coinGeckoClient/types'
 import { RefreshControl } from "react-native";
+import UNav from "app/components/UNav";
 
 export function MarketDetailScreen({ id }: { id: string }) {
   const { market, marketQuery } = useMarket(id)
@@ -38,6 +39,7 @@ export function MarketDetailScreen({ id }: { id: string }) {
       }
     >
       <Container gap="$4" maw="860px" w="100%" style={{ margin: "0 auto" }}>
+        <UNav title={market?.name ?? ''}/>
         <Header market={market}/>
         <Separator/>
 

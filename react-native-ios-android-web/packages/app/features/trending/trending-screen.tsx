@@ -3,6 +3,7 @@ import { useTrending } from 'app/features/trending/hooks'
 import { useMarkets } from "app/features/home/hooks";
 import MarketList from "app/components/MarketList";
 import { RefreshControl } from "react-native";
+import UNav from "app/components/UNav";
 
 export function TrendingScreen() {
   const { trendingIds, trendingQuery } = useTrending()
@@ -11,6 +12,7 @@ export function TrendingScreen() {
 
   return (
     <Main maxHeight="100vh">
+      <UNav title="Trending"/>
       <MarketList
         markets={ isFetching ? [] : markets }
         footer={
