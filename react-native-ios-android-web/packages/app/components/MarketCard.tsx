@@ -1,11 +1,11 @@
-import { Market } from "app/data/coinGeckoClient/types";
-import { memo, useMemo } from "react";
-import { abbreviateNumber } from "app/utils/abbreviateNumber";
-import { useTheme } from "@tamagui/core";
-import { Card, Image, SizableText, View, XStack, YStack} from "@my/ui";
-import { LinearGradient } from "@tamagui/linear-gradient";
-import { LineChart } from "react-native-svg-charts";
-import { NumericFormat } from "react-number-format";
+import { Market } from 'app/data/coinGeckoClient/types'
+import { memo, useMemo } from 'react'
+import { abbreviateNumber } from 'app/utils/abbreviateNumber'
+import { useTheme } from '@tamagui/core'
+import { Card, Image, SizableText, View, XStack, YStack } from '@my/ui'
+import { LinearGradient } from '@tamagui/linear-gradient'
+import { LineChart } from 'react-native-svg-charts'
+import { NumericFormat } from 'react-number-format'
 
 export type MarketCardProps = {
   market: Market,
@@ -78,12 +78,14 @@ export const MarketCard = memo(({market, width = 100, onPress }: MarketCardProps
       </XStack>
 
       <View f={1}>
-        <LineChart
-          data={market.sparkline_in_7d?.price ?? []}
-          style={{height: '100%'}}
-          svg={{ stroke: chartColor, strokeWidth: 2 }}
-          contentInset={{ top: sm ? 8 : 16, bottom: sm ? 4 : 8 }}
-        />
+        {/*<LineChart*/}
+        {/*  data={market.sparkline_in_7d?.price ?? []}*/}
+        {/*  style={{height: '100%'}}*/}
+        {/*  svg={{ stroke: chartColor, strokeWidth: 2 }}*/}
+        {/*  contentInset={{ top: sm ? 8 : 16, bottom: sm ? 4 : 8 }}*/}
+        {/*  animate={true}*/}
+        {/*/>*/}
+        <SizableText>Chart</SizableText>
       </View>
 
       <Card.Footer>

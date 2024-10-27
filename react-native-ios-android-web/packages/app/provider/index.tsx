@@ -12,7 +12,6 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { QueryClient } from '@tanstack/react-query'
 
 const queryClient = new QueryClient();
-console.log('[CREATING NEW QUERY CLIENT] !!!!!')
 
 export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'config'>) {
   const colorScheme = useColorScheme()

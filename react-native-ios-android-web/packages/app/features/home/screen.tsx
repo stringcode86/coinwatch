@@ -1,43 +1,49 @@
 import {Main, Spinner, Input, XStack, SizableText} from '@my/ui'
-import {useState} from 'react'
+import {useCallback, useEffect, useImperativeHandle, useRef, useState} from 'react'
 import useDebouncedValue from "app/utils/debounce";
 import MarketList from 'app/components/MarketList'
 import { useMarkets, useSearchCoins } from 'app/features/home/hooks'
-import { RefreshControl } from 'react-native'
+import {LayoutChangeEvent, RefreshControl} from 'react-native'
 
 export function HomeScreen() {
   const [searchTerm, setSearchTerm] = useState('');
-  const { coinIds, coinsQuery } = useSearchCoins(useDebouncedValue(searchTerm, 300))
+  const { coinIds, coinsQuery } = useSearchCoins(searchTerm)
   const { markets, marketsQuery } = useMarkets(coinIds)
-  const isFetching = coinsQuery.isFetching || marketsQuery.isFetching
+  const isFetching = marketsQuery.isFetching || coinsQuery.isFetching
+  const showRefresh = isFetching && markets.length > 0
+  const shouldFetchNext = !isFetching && searchTerm == ''
 
   return (
     <Main maxHeight="100vh" gap="$4">
       <MarketList
         markets={ (searchTerm != '' && isFetching) ? [] : markets }
-        header={
-          <XStack>
-            <Input
-              f={1}
-              onChangeText={(text) => setSearchTerm(text)}
-              value={searchTerm}
-              marginHorizontal="$3"
-            />
-            <SizableText>{markets.length}</SizableText>
-          </XStack>
-        }
-        footer={
-          isFetching ? <Spinner size='large' p="$4"/> : undefined
-        }
+        header={ SearchHeader((text) => setSearchTerm(text)) }
+        footer={ isFetching ? <Spinner size='large' p="$4"/> : undefined }
         refreshControl={
-          (markets.length > 0)
-            ? <RefreshControl onRefresh={marketsQuery.refetch} refreshing={isFetching}/>
-            : undefined
+          <RefreshControl
+            onRefresh={marketsQuery.refetch}
+            refreshing={showRefresh}
+          />
         }
         onEndReached={
-          () => !isFetching && searchTerm == '' && marketsQuery.fetchNextPage()
-      }
+          () => shouldFetchNext && marketsQuery.fetchNextPage()
+        }
       />
     </Main>
+  )
+}
+
+
+function SearchHeader(debouncedTextHandler:(text: string) => void) {
+  const [term, setTerm] = useState('');
+  const delay = 300
+
+  useEffect(() => {
+    const handler = setTimeout(() => debouncedTextHandler(term), delay)
+    return () => clearTimeout(handler)
+  }, [term, 300])
+
+  return (
+    <Input onChangeText={(text) => setTerm(text)} value={term} mx="$3"/>
   )
 }

@@ -5,7 +5,7 @@ const DEFAULT_HEADERS = {
   'accept': 'application/json',
   'x-cg-demo-api-key': ENV.coinGeckoApiKey
 }
-const DEBUG = true
+const DEBUG = false
 
 export function get<T>(
   path: string,

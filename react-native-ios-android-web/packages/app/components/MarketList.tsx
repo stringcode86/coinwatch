@@ -6,6 +6,7 @@ import { smallCardSizeAndColCnt } from 'app/utils/smallCardSize'
 import { useRouter } from "solito/navigation";
 import { MarketCard } from 'app/components/MarketCard'
 
+
 type MarketListProps = {
   markets: Market[],
   header?: React.ReactElement,
@@ -27,14 +28,19 @@ const MarketList = ({
   const [colNum, setColNum] = useState(2)
   const space = getTokenValue('$space.4')
   const onLayout = (e: LayoutChangeEvent) => {
+    // const en = e.nativeEvent.layout
+    // console.log('[LAYOUT]', en.x, en.y, en.width, en.height, 'cols:', colNum)
     if (prevWidth == e.nativeEvent.layout.width) {
       return
     }
     const dims = smallCardSizeAndColCnt(e.nativeEvent.layout.width, space)
-    setCellWidth(dims.width)
+    // console.log('[LAYOUT] setting', dims.colCount, e.nativeEvent.layout.width, space)
     setColNum(dims.colCount)
+    setCellWidth(dims.width)
     setPrevWidth(e.nativeEvent.layout.width)
   }
+
+  // const onSizeChange = ()
 
   return (
     <FlatList
