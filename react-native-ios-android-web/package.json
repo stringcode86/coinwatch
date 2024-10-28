@@ -7,7 +7,6 @@
   ],
   "scripts": {
     "native": "cd apps/expo && yarn start",
-    "nativeprebuild": "cd apps/expo && npx expo prebuild",
     "watch": "yarn workspaces foreach -pi run watch",
     "vercel:install": "yarn set version 3.5 && yarn install",
     "web": "yarn build && cd apps/next && yarn next",
@@ -23,7 +22,10 @@
     "test:watch": "vitest",
     "prepare": "husky",
     "android": "expo run:android",
-    "ios": "expo run:ios"
+    "ios": "expo run:ios",
+    "nativeprebuild": "expo prebuild",
+    "androidalt": "cd apps/expo && npx expo run:android",
+    "nativeprebuildalt": "cd apps/expo && npx expo prebuild"
   },
   "resolutions": {
     "react": "^18.3.1",
