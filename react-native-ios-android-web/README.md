@@ -111,7 +111,7 @@ You may potentially want to have the native module transpiled for the next app. 
 - build prod build `yarn web:prod`
 - serve prod build `yarn web:prod:server`
 
-## Native (Android & iOS)
+### Native (Android & iOS)
 - expo dev `yarn native` (s to switch to expo build, which is what you probably want)
 - generate Android & iOS projects `yarn nativeprebuild` 
 - `yarn build`

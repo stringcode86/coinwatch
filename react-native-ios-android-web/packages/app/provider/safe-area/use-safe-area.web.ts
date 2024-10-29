@@ -1,7 +1,7 @@
 // I don't use the real useSafeAreaInsets() hook, since
 // 1) the SafeAreaProvider forces you to render null on Web until it measures
 // 2) you might not need to support it, unless you're doing landscape stuff
-// 3) react-native-ios-android-web-safe-area-context has a massive import on Web
+// 3) react-native-safe-area-context has a massive import on Web
 // see: https://github.com/th3rdwave/react-native-safe-area-context/pull/189#issuecomment-815274313
 // 4) most importantly, I think you can just use the env(safe-area-inset-bottom) CSS variable instead
 // after all, safe area code is few-and-far-between, so if you have to write some platform-speciifc code for it,
