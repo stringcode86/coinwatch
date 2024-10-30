@@ -32,8 +32,6 @@ The main apps are:
 
 ## 📋 TODO
 
-- [ ] Update readme
-- [ ] Update site
 - [ ] Optimize layout
 - [ ] Optimize search
 - [ ] Switch to different chart lib
