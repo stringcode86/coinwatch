@@ -1,7 +1,8 @@
 # Coin Watch
 
-React Native Expo iOS and Android apps. And React Next.js front end app. Uses
-Tamagui UIKit, Tanstack Query, Zustand.
+React Native Expo iOS and Android apps. And React Next.js front end app. 
+Virtually all code is shared amongst all three platforms. Uses Tamagui UIKit,
+Tanstack Query, Zustand.
 
 ## 🏁 Run
 
