@@ -12,19 +12,22 @@ import {
   View
 } from '@my/ui'
 import { Star, StarFull } from '@tamagui/lucide-icons'
-import { useMarket } from "app/features/market/hooks"
-import { NumericFormat } from "react-number-format";
-import { abbreviateNumber } from "app/utils/abbreviateNumber";
-import { LineChart } from "react-native-svg-charts";
-import { useTheme } from "@tamagui/core";
+import { useMarket } from 'app/features/market/hooks'
+import { useFavorites } from 'app/features/favorite/hooks'
+import { NumericFormat } from 'react-number-format'
+import { abbreviateNumber } from 'app/utils/abbreviateNumber'
+import { LineChart } from 'react-native-svg-charts'
+import { useTheme } from '@tamagui/core'
 import { Market } from 'app/data/coinGeckoClient/types'
-import { RefreshControl } from "react-native";
-import UNav from "app/components/UNav";
+import { RefreshControl } from 'react-native'
+import UNav from 'app/components/UNav'
 
 export function MarketDetailScreen({ id }: { id: string }) {
   const { market, marketQuery } = useMarket(id)
-  const up = (market?.price_change_percentage_24h ?? 1) > 0
+  const { isFavorite, toggleFavorite } = useFavorites()
+
   const theme = useTheme()
+  const up = (market?.price_change_percentage_24h ?? 1) > 0
   const chartColor = up ? theme.green10.get() : theme.red10.get()
 
   return (
@@ -40,7 +43,7 @@ export function MarketDetailScreen({ id }: { id: string }) {
     >
       <Container gap="$4" maw="860px" w="100%" style={{ margin: "0 auto" }}>
         <UNav title={market?.name ?? ''}/>
-        <Header market={market}/>
+        <Header market={market} isFavorite={isFavorite(id)} toggleFavorite={()=>toggleFavorite(id)}/>
         <Separator/>
 
         <YStack
@@ -62,7 +65,11 @@ export function MarketDetailScreen({ id }: { id: string }) {
   )
 }
 
-function Header({market}: { market: Market | null}) {
+function Header({market, isFavorite, toggleFavorite}: {
+  market: Market | null,
+  isFavorite: boolean,
+  toggleFavorite: ()=>void,
+}) {
   return (
     <XStack gap="$4" ai="flex-start">
       <Image source={{ uri: market?.image }} aspectRatio={1} minWidth="29%"/>
@@ -70,7 +77,14 @@ function Header({market}: { market: Market | null}) {
         <H1 f={1}>{market?.name}</H1>
         <XStack jc="space-between" ai="center">
           <H2 tt="uppercase">{market?.symbol}</H2>
-          <Star size="$3" color="$blue9"/>
+          <Button
+            onPress={toggleFavorite}
+            icon={
+              isFavorite
+              ? <StarFull size="$3" color="$blue9"/>
+              : <Star size="$3" color="$blue9"/>
+            }
+          />
         </XStack>
       </YStack>
     </XStack>

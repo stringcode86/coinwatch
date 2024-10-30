@@ -21,7 +21,7 @@ export function useMarkets(ids: string[] | null = null): {
     getNextPageParam: (lastPage, pages) => pages.length + 1,
     initialPageParam: 1,
     placeholderData: keepPreviousData,
-    staleTime: 60000
+    staleTime: 60000,
   })
 
   const markets: Market[] = useMemo(

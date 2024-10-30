@@ -12,7 +12,7 @@ coin gecko API. Review the code
     [react-js-web-app](./react-js-web-app). 
 
 
-- **Mobile React Native (iOS, Android & Web)**. React Native app version of Coin Watch for iOS and Android. review 
+- **Mobile React Native (iOS, Android & Web)**. React Native Expo iOS and Android apps. And React Next.js front end app. Uses Tamagui UIKit, Tanstack Query, Zustand. review 
 [react-native-ios-android-web](./react-native-ios-android-web).
 
 

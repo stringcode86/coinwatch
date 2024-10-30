@@ -1,7 +1,8 @@
-import {useQuery, UseQueryResult} from "@tanstack/react-query";
-import { get as cgGet } from "app/data/coinGeckoClient/client";
-import { Market } from "app/data/coinGeckoClient/types";
-import { defaultGetMarketsParams } from "app/data/coinGeckoClient/utils";
+import { useQuery, UseQueryResult } from '@tanstack/react-query'
+import { get as cgGet } from 'app/data/coinGeckoClient/client'
+import { Market } from 'app/data/coinGeckoClient/types'
+import { defaultGetMarketsParams } from 'app/data/coinGeckoClient/utils'
+import { useStore } from 'app/data/store'
 
 export function useMarket(id: string): {
   market: Market | null,
