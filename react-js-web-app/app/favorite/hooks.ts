@@ -1,4 +1,5 @@
-import { useStore } from '@/data/store'
+import {useStore} from '@/data/store'
+
 export function useFavorites(): {
   favorites: Set<string>,
   updateFavorites: (Set) => void,
@@ -10,7 +11,7 @@ export function useFavorites(): {
   const isFavorite = (id: string) => favorites.has(id)
   const toggleFavorite = (id: string) => {
     const favs = new Set([...favorites])
-    let _ = favs.has(id) ? favs.delete(id) : favs.add(id)
+    favs.has(id) ? favs.delete(id) : favs.add(id)
     updateFavorites(favs)
   }
   return {
