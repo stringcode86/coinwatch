@@ -10,7 +10,8 @@ export function useFavorites(): {
   const isFavorite = (id: string) => favorites.has(id)
   const toggleFavorite = (id: string) => {
     const favs = new Set([...favorites])
-    let _ = favs.has(id) ? favs.delete(id) : favs.add(id)
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    favs.has(id) ? favs.delete(id) : favs.add(id)
     updateFavorites(favs)
   }
   return {
