@@ -1,23 +1,24 @@
-import { useStore } from '@/data/store'
-export function useFavorites(): {
-  favorites: Set<string>,
-  updateFavorites: (Set) => void,
-  isFavorite: (string) => boolean,
-  toggleFavorite: (string) => void,
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import { get as cgGet} from "@/data/coinGeckoClient/client";
+import { Coin, SearchResult } from "@/data/coinGeckoClient/types";
+
+export function useTrending(): {
+  trending: Coin[]
+  trendingIds: string[]
+  trendingQuery: UseQueryResult
 } {
-  const favorites = useStore((state) => state.favorites)
-  const updateFavorites = useStore((state) => state.updateFavorites)
-  const isFavorite = (id: string) => favorites.has(id)
-  const toggleFavorite = (id: string) => {
-    const favs = new Set([...favorites])
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    favs.has(id) ? favs.delete(id) : favs.add(id)
-    updateFavorites(favs)
-  }
+  const trendingQuery = useQuery({
+    queryKey: ['/search/trending'],
+    queryFn: ({queryKey}) => cgGet<SearchResult>(queryKey[0] as string, {}),
+    staleTime: 6000
+  })
+
+  const trendingCoins: Coin[] = trendingQuery.data?.coins ?? []
+  const ids: string[] = trendingCoins.map(({item}) => item.id).filter(item => item)
+
   return {
-    favorites: favorites,
-    updateFavorites: updateFavorites,
-    isFavorite: isFavorite,
-    toggleFavorite: toggleFavorite
+    trending: trendingCoins,
+    trendingIds: ids,
+    trendingQuery: trendingQuery
   }
 }

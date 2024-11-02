@@ -19,20 +19,9 @@ export const MarketCard = memo(({market, width = 100, onPress }: MarketCardProps
   const fs = sm ? "$5" : "$7"
   const fssm = sm ? "$3" : "$5"
 
-  const up = useMemo(
-    () => (market.price_change_percentage_24h ?? 1) > 0,
-    [market.price_change_percentage_24h]
-  )
-
-  const marketCap = useMemo(
-    () => abbreviateNumber(market.market_cap ?? ''),
-    [market.market_cap]
-  )
-
-  const volume = useMemo(
-    () => abbreviateNumber(market.total_volume ?? ''),
-    [market.total_volume]
-  )
+  const up = (market.price_change_percentage_24h ?? 1) > 0
+  const marketCap =abbreviateNumber(market.market_cap ?? '')
+  const volume = abbreviateNumber(market.total_volume ?? '')
 
   const pricePct = useMemo(
     () => `${(market.price_change_percentage_24h ?? 0).toFixed(2)}%`,

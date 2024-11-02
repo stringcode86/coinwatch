@@ -1,18 +1,21 @@
 'use client'
 
 import { MarketCardList } from '@/components/MarketCardList'
-import { useFavorites } from '@/app/trending/hooks'
+import { useTrending } from '@/app/trending/hooks'
 import { useMarkets } from '@/app/hooks'
+import { TailSpin } from 'react-loader-spinner'
 import Nav from '@/components/Nav'
 
 export default function Trending() {
-  const { favorites } = useFavorites()
-  const { markets } = useMarkets(Array.from(favorites))
+  const { trendingIds, trendingQuery } = useTrending()
+  const { markets, marketsQuery } = useMarkets(trendingIds)
+  const isFetching = marketsQuery.isFetching || trendingQuery.isFetching
 
   return (
     <main>
       <Nav title="Trending"/>
       <MarketCardList markets={markets} />
+      <TailSpin visible={isFetching} color="black" wrapperClass="w-12 m-auto"/>
     </main>
   )
 }
