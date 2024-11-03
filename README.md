@@ -8,13 +8,13 @@ coin gecko API. Review the code
 
 ## One app built six different ways:
 
-- **Web front end**. React.js, Redux front end app version of Coin Watch, review 
-    [react-js-web-app](./react-js-web-app). 
+- **Web front end**. Next.js React version of CoinWatch app. Uses Tailwind, Tanstack Query, Zustand, React-rechart.
+  Review code [react-js-web-app](./react-js-web-app). 
 
 
 - **Mobile React Native (iOS, Android & Web)**. React Native Expo iOS and Android 
 apps. And React Next.js front end app. Virtually all code is shared amongst all 
-three platforms. Uses Tamagui UIKit, Tanstack Query, Zustand. review 
+three platforms. Uses Tamagui UIKit, Tanstack Query, Zustand. Review code
 [react-native-ios-android-web](./react-native-ios-android-web).
 
 
