@@ -12,10 +12,12 @@ export default function Favorite() {
   const isFetching = marketsQuery.isFetching
 
   return (
-    <main>
+    <>
       <Nav title="Favorite"/>
-      <MarketCardList markets={markets} />
-      <TailSpin visible={isFetching} color="black" wrapperClass="w-12 m-auto"/>
-    </main>
+      <main>
+        <MarketCardList markets={markets} />
+        <TailSpin visible={isFetching} color="black" wrapperClass="w-12 m-auto"/>
+      </main>
+    </>
   )
 }

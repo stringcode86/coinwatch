@@ -15,7 +15,7 @@ export const MarketCard = memo(({market, onPress }: MarketCardProps) => {
   const up = (market.price_change_percentage_24h ?? 1) > 0
   const marketCap =abbreviateNumber(market.market_cap ?? '')
   const volume = abbreviateNumber(market.total_volume ?? '')
-  const chartColor = up ? 'green' : 'red'
+  const chartColor = up ? 'rgb(34 197 94)' : 'rgb(239 68 68)'
 
   const pricePct = useMemo(
     () => `${(market.price_change_percentage_24h ?? 0).toFixed(2)}%`,
@@ -29,7 +29,7 @@ export const MarketCard = memo(({market, onPress }: MarketCardProps) => {
     <Link href={`/market/${market.id}`} className="
       MarketCard p-4 flex flex-col aspect-square rounded-2xl shadow-2xl
       hover:shadow-md gap-2 transform transition duration-150 hover:scale-95
-      " style={{flexBasis: '275px'}}
+      bg-background2" style={{flexBasis: '275px'}}
     >
       <div className="flex gap-4">
 
