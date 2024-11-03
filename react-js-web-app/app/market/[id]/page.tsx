@@ -20,8 +20,6 @@ export default function Market() {
   const { id } = useParams<{ id: string }>()
   const { market, marketQuery } = useMarket(id)
   const { isFavorite, toggleFavorite } = useFavorites()
-  const up = (market?.price_change_percentage_24h ?? 1) > 0
-  const chartColor = up ? 'rgb(34 197 94)' : 'rgb(239 68 68)'
 
   return (
     <>
@@ -38,7 +36,7 @@ export default function Market() {
             <div className="flex flex-col gap-8 md:flex-row md:gap-4">
               <ChartSection market={market}/>
               <Divider className="block md:hidden"/>
-              <Details market={market} pctCol={chartColor}/>
+              <Details market={market}/>
             </div>
           </div>
           : null }
@@ -73,23 +71,25 @@ function ChartSection({market}: { market: Market }) {
   const { ref, height, width } = useComponentSize()
   const sparkline = market?.sparkline_in_7d.price ?? []
   const up = (market?.price_change_percentage_24h ?? 1) > 0
-  const chartColor = up ? 'rgb(34 197 94)' : 'rgb(239 68 68)'
 
   return (
     <div className="w-full md:w-1/2 flex-2 aspect-square" ref={ref}>
-      <Chart chartData={sparkline} color={chartColor} width={width} height={height}/>
+      <Chart
+        chartData={sparkline}
+        color={`var(--tint-${up ? 'up' : 'down'})`}
+        width={width}
+        height={height}
+      />
     </div>
   )
 }
 
-function Details({market, pctCol = 'black'}: {
-  market: Market,
-  pctCol: string
-}) {
+function Details({market, pctCol = 'black'}: { market: Market }) {
   const volume = abbreviateNumber(market.market_cap ?? 0)
   const currSupply = abbreviateNumber(market.circulating_supply ?? 0)
   const maxSupply = abbreviateNumber(market.max_supply ?? 0)
   const pctChange = (market.price_change_percentage_24h ?? 0).toFixed(2)
+  const up = (market?.price_change_percentage_24h ?? 1) > 0
 
   return (
     <div className="flex flex-1 flex-col gap-4">
@@ -104,7 +104,7 @@ function Details({market, pctCol = 'black'}: {
           decimalScale={2} // TODO: Handle price 0.0000123
           renderText={(value) => <span className="w-1/3">{value}</span>}
         />
-        <span className="w-1/3" style={{color: pctCol}}>{pctChange}%</span>
+        <span className={`w-1/3 text-tint${up ? 'Up' : 'Down'}`}>{pctChange}%</span>
       </div>
 
       <div className="flex flex-row">

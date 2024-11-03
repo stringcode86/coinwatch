@@ -6,21 +6,11 @@ import { NumericFormat } from 'react-number-format'
 import Chart from '@/components/Chart'
 import Link from 'next/link'
 
-export type MarketCardProps = {
-  market: Market,
-  onPress?: () => void
-}
-
-export const MarketCard = memo(({market, onPress }: MarketCardProps) => {
+export const MarketCard = memo(({market}: {market: Market}) => {
   const up = (market.price_change_percentage_24h ?? 1) > 0
-  const marketCap =abbreviateNumber(market.market_cap ?? '')
+  const marketCap = abbreviateNumber(market.market_cap ?? '')
   const volume = abbreviateNumber(market.total_volume ?? '')
-  const chartColor = up ? 'rgb(34 197 94)' : 'rgb(239 68 68)'
-
-  const pricePct = useMemo(
-    () => `${(market.price_change_percentage_24h ?? 0).toFixed(2)}%`,
-    [market.price_change_percentage_24h]
-  )
+  const pricePct = (market.price_change_percentage_24h ?? 0).toFixed(2)
 
   const { ref, height, width } = useComponentSize()
   const sparkline = market?.sparkline_in_7d.price ?? []
@@ -35,7 +25,7 @@ export const MarketCard = memo(({market, onPress }: MarketCardProps) => {
 
         <div className="flex flex-col justify-between">
           <img className="aspect-square w-12" src={market.image} alt={market.name}/>
-          <span style={{color: chartColor}}>{pricePct}</span>
+          <span className={up ? "text-tintUp" : "text-tintDown"}>{pricePct}</span>
         </div>
 
         <div className="flex flex-2 flex-col gap-[0.2rem]">
@@ -46,15 +36,18 @@ export const MarketCard = memo(({market, onPress }: MarketCardProps) => {
       </div>
 
       <div ref={ref} style={{flex: 2}}>
-        <Chart chartData={sparkline}
-          color={chartColor}
+        <Chart
+          chartData={sparkline}
+          color={ up ? "var(--tint-up)" : "var(--tint-down)"}
           width={width}
           height={height}
         />
       </div>
 
       <div className="flex justify-center text-xl font-bold">
-        <span style={{color: chartColor}}>{up ? '▲ ' : '▼ '}</span>
+        <span className={up ? "text-tintUp" : "text-tintDown"}>
+          {up ? '▲ ' : '▼ '}
+        </span>
         <NumericFormat
           displayType="text"
           value={market.current_price}

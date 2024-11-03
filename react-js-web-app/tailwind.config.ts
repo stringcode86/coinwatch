@@ -12,6 +12,8 @@ const config: Config = {
         background: "var(--background)",
         background2: "var(--background2)",
         foreground: "var(--foreground)",
+        tintUp: "var(--tint-up)",
+        tintDown: "var(--tint-down)",
       },
     },
   },

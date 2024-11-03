@@ -6,6 +6,8 @@
   --background: #ffffff;
   --background2: #ffffff;
   --foreground: #171717;
+  --tint-up: #22C55E;
+  --tint-down: #EF4444;
 }
 
 @media (prefers-color-scheme: dark) {
