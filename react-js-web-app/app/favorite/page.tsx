@@ -16,7 +16,7 @@ export default function Favorite() {
       <Nav title="Favorite"/>
       <main>
         <MarketCardList markets={markets} />
-        <TailSpin visible={isFetching} color="black" wrapperClass="w-12 m-auto"/>
+        <TailSpin visible={isFetching} color="var(background2)" wrapperClass="w-12 m-auto"/>
       </main>
     </>
   )

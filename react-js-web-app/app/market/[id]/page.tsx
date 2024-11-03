@@ -40,7 +40,7 @@ export default function Market() {
             </div>
           </div>
           : null }
-        <TailSpin visible={marketQuery.isFetching} color="black" wrapperClass="w-12 m-auto"/>
+        <TailSpin visible={marketQuery.isFetching} color="var(background2)" wrapperClass="w-12 m-auto"/>
       </main>
     </>
   )

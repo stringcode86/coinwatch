@@ -34,7 +34,7 @@ export default function Home() {
         inputPlaceholder="Search coins"
       />
       <MarketCardList markets={markets} />
-      <TailSpin visible={isFetching} color="black" wrapperClass="w-12 m-auto"/>
+      <TailSpin visible={isFetching} color="" wrapperClass="w-12 m-auto"/>
     </main>
   )
 }

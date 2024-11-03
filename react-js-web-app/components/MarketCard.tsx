@@ -16,12 +16,15 @@ export const MarketCard = memo(({market}: {market: Market}) => {
   const sparkline = market?.sparkline_in_7d.price ?? []
 
   return (
-    <Link href={`/market/${market.id}`} className="
+    <Link href={`/market/${market.id}`} className={`
       MarketCard p-4 flex flex-col aspect-square rounded-2xl shadow-2xl
       hover:shadow-md gap-2 transform transition duration-150 hover:scale-95
-      bg-background2" style={{flexBasis: '275px'}}
+      bg-background2 relative bg-gradient-to-b from-background2 from-65%
+      ${up ? 'to-green-100' : 'to-red-100'} 
+      ${up ? 'dark:to-green-950' : 'dark:to-red-950'}`}
+      style={{flexBasis: '275px'}}
     >
-      <div className="flex gap-4">
+      <div className="flex gap-4 z-50">
 
         <div className="flex flex-col justify-between">
           <img className="aspect-square w-12" src={market.image} alt={market.name}/>
@@ -58,6 +61,10 @@ export const MarketCard = memo(({market}: {market: Market}) => {
           renderText={(value) => <span>{value}</span>}
         />
       </div>
+      {/*<div className="*/}
+      {/*  absolute bottom-0 left-0 right-0 rounded-2xl h-1/3 bg-gradient-to-t*/}
+      {/*  from-green-100 dark:from-green-900 z-10*/}
+      {/*"></div>*/}
     </Link>
   )
 })
