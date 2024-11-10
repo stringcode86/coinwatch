@@ -3,8 +3,8 @@
 import { MarketCardList } from '@/components/MarketCardList'
 import { useFavorites } from '@/app/favorite/hooks'
 import { useMarkets } from '@/app/hooks'
-import { TailSpin } from 'react-loader-spinner'
 import Nav from '@/components/Nav'
+import Spinner from '@/components/Spinner'
 
 export default function Favorite() {
   const { favorites } = useFavorites()
@@ -16,7 +16,7 @@ export default function Favorite() {
       <Nav title="Favorite"/>
       <main>
         <MarketCardList markets={markets} />
-        <TailSpin visible={isFetching} color="var(background2)" wrapperClass="w-12 m-auto"/>
+        <Spinner visible={isFetching} />
       </main>
     </>
   )

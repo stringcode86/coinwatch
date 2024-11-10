@@ -6,7 +6,6 @@ import { useMarket } from '@/app/market/[id]/hooks'
 import { useFavorites } from '@/app/favorite/hooks'
 import { useEffect, useMemo, useState } from 'react'
 import { useComponentSize } from '@/utils/useComponentSize'
-import { TailSpin } from 'react-loader-spinner'
 import { Star } from 'lucide-react'
 import Divider from '@/components/Divider'
 import Nav from '@/components/Nav'
@@ -14,6 +13,7 @@ import Chart from '@/components/Chart'
 import Button from "@/components/Button";
 import {abbreviateNumber} from "@/utils/abbreviateNumber";
 import {NumericFormat} from "react-number-format";
+import Spinner from '@/components/Spinner'
 
 
 export default function Market() {
@@ -40,7 +40,7 @@ export default function Market() {
             </div>
           </div>
           : null }
-        <TailSpin visible={marketQuery.isFetching} color="var(background2)" wrapperClass="w-12 m-auto"/>
+        <Spinner visible={marketQuery.isFetching} />
       </main>
     </>
   )

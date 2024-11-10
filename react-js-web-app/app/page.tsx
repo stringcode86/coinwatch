@@ -3,7 +3,7 @@
 import  { useMarkets, useSearchCoins } from './hooks'
 import { useState, useEffect } from 'react'
 import { MarketCardList } from '@/components/MarketCardList'
-import { TailSpin } from 'react-loader-spinner'
+import Spinner from "@/components/Spinner";
 import Nav from "@/components/Nav";
 
 export default function Home() {
@@ -34,7 +34,7 @@ export default function Home() {
         inputPlaceholder="Search coins"
       />
       <MarketCardList markets={markets} />
-      <TailSpin visible={isFetching} color="" wrapperClass="w-12 m-auto"/>
+      <Spinner visible={isFetching} />
     </main>
   )
 }
