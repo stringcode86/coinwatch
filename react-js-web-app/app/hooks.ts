@@ -3,7 +3,9 @@ import { UseInfiniteQueryResult } from '@tanstack/react-query/src/types'
 import { Coin, Market, SearchResult } from '@/data/coinGeckoClient/types'
 import { get as cgGet } from '@/data/coinGeckoClient/client'
 import { defaultGetMarketsParams } from '@/data/coinGeckoClient/utils'
-import { useMemo } from "react";
+import { useMemo } from 'react'
+
+const DEFAULT_STALE_TIME =  60000
 
 export function useMarkets(ids: string[] | null = null): {
   markets: Market[],
@@ -11,17 +13,17 @@ export function useMarkets(ids: string[] | null = null): {
 } {
   const query = useInfiniteQuery({
     queryKey: ['/coins/markets', ids],
-    queryFn: ({pageParam}) => cgGet<Market[]>(
+    queryFn: ({pageParam}: {pageParam: number}) => cgGet<Market[]>(
       '/coins/markets', {
         ...defaultGetMarketsParams,
-        ids: ids as any,
-        page: pageParam as number
+        ids: ids,
+        page: pageParam
       }
     ),
     getNextPageParam: (lastPage, pages) => pages.length + 1,
     initialPageParam: 1,
     placeholderData: keepPreviousData,
-    staleTime: 60000,
+    staleTime: DEFAULT_STALE_TIME,
   })
 
   const markets: Market[] = useMemo(
@@ -46,7 +48,7 @@ export function useSearchCoins(searchTerm: string): {
       queryKey[0] as string, {query: queryKey[1] as string}
     ),
     enabled: searchTerm != '',
-    staleTime: 60000
+    staleTime: DEFAULT_STALE_TIME
   })
 
   const searchCoins: Coin[] = searchQuery.data?.coins ?? []
