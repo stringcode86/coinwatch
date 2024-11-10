@@ -9,13 +9,14 @@ import Spinner from '@/components/Spinner'
 export default function Trending() {
   const { trendingIds, trendingQuery } = useTrending()
   const { markets, marketsQuery } = useMarkets(trendingIds)
+  const trendingMarkets = trendingIds.length > 0 ? markets : []
   const isFetching = marketsQuery.isFetching || trendingQuery.isFetching
 
   return (
     <>
       <Nav title="Trending"/>
       <main>
-        <MarketCardList markets={markets} />
+        <MarketCardList markets={trendingMarkets} />
         <Spinner visible={isFetching} />
       </main>
     </>

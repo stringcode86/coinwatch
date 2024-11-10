@@ -1,10 +1,9 @@
 'use client'
 
 import { Market } from '@/data/coinGeckoClient/types'
-import { useParams, useSearchParams } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { useMarket } from '@/app/market/[id]/hooks'
 import { useFavorites } from '@/app/favorite/hooks'
-import { useEffect, useMemo, useState } from 'react'
 import { useComponentSize } from '@/utils/useComponentSize'
 import { Star } from 'lucide-react'
 import Divider from '@/components/Divider'
@@ -14,7 +13,6 @@ import Button from "@/components/Button";
 import {abbreviateNumber} from "@/utils/abbreviateNumber";
 import {NumericFormat} from "react-number-format";
 import Spinner from '@/components/Spinner'
-
 
 export default function Market() {
   const { id } = useParams<{ id: string }>()
@@ -84,7 +82,7 @@ function ChartSection({market}: { market: Market }) {
   )
 }
 
-function Details({market, pctCol = 'black'}: { market: Market }) {
+function Details({market}: { market: Market }) {
   const volume = abbreviateNumber(market.market_cap ?? 0)
   const currSupply = abbreviateNumber(market.circulating_supply ?? 0)
   const maxSupply = abbreviateNumber(market.max_supply ?? 0)

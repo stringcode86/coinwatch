@@ -1,4 +1,4 @@
-import {useStore} from '@/data/store'
+import { useStore } from '@/data/store'
 
 export function useFavorites(): {
   favorites: Set<string>,

@@ -2,10 +2,8 @@ import { keepPreviousData, useInfiniteQuery, useQuery, UseQueryResult } from '@t
 import { UseInfiniteQueryResult } from '@tanstack/react-query/src/types'
 import { Coin, Market, SearchResult } from '@/data/coinGeckoClient/types'
 import { get as cgGet } from '@/data/coinGeckoClient/client'
-import { defaultGetMarketsParams } from '@/data/coinGeckoClient/utils'
+import { defaultGetMarketsParams, DEFAULT_STALE_TIME } from '@/data/coinGeckoClient/utils'
 import { useMemo } from 'react'
-
-const DEFAULT_STALE_TIME =  60000
 
 export function useMarkets(ids: string[] | null = null): {
   markets: Market[],
