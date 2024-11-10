@@ -36,3 +36,4 @@ The main apps are:
 - [ ] Optimize layout
 - [ ] Optimize search
 - [ ] Switch to different chart lib
+- [ ] Integrate `RefreshControl` into `MarketList` component

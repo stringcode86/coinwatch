@@ -1,7 +1,8 @@
-import { useMemo } from "react";
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
-import { get as cgGet} from "app/data/coinGeckoClient/client";
-import { Coin, SearchResult } from "app/data/coinGeckoClient/types";
+import { useQuery, UseQueryResult } from '@tanstack/react-query'
+import { get as cgGet} from 'app/data/coinGeckoClient/client'
+import { Coin, SearchResult } from 'app/data/coinGeckoClient/types'
+import {DEFAULT_STALE_TIME} from 'app/data/coinGeckoClient/utils'
+
 
 export function useTrending(): {
   trending: Coin[]
@@ -11,7 +12,7 @@ export function useTrending(): {
   const trendingQuery = useQuery({
     queryKey: ['/search/trending'],
     queryFn: ({queryKey}) => cgGet<SearchResult>(queryKey[0] as string, {}),
-    staleTime: 6000
+    staleTime: DEFAULT_STALE_TIME
   })
 
   const trendingCoins: Coin[] = trendingQuery.data?.coins ?? []
@@ -23,4 +24,3 @@ export function useTrending(): {
     trendingQuery: trendingQuery
   }
 }
-

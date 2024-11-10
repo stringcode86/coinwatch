@@ -1,3 +1,5 @@
+export const DEFAULT_STALE_TIME =  60000
+
 export const defaultGetMarketsParams = {
   ids: null,
   vs_currency: 'usd',

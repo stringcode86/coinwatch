@@ -17,7 +17,7 @@ export function HomeScreen() {
     <Main maxHeight="100vh" gap="$4">
       <UNav/>
       <MarketList
-        markets={ (searchTerm != '' && isFetching) ? [] : markets }
+        markets={ markets }
         header={ SearchHeader((text) => setSearchTerm(text)) }
         footer={ isFetching ? <Spinner size='large' p="$4"/> : undefined }
         refreshControl={

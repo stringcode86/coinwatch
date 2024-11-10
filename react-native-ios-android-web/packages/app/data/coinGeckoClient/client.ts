@@ -5,11 +5,12 @@ const DEFAULT_HEADERS = {
   'accept': 'application/json',
   'x-cg-demo-api-key': ENV.coinGeckoApiKey
 }
+
 const DEBUG = false
 
 export function get<T>(
   path: string,
-  params?: Record<string, string | number | boolean | undefined | null>
+  params?: Record<string, string | Array<string> | number | boolean | undefined | null>
 ): Promise<T> {
   if (params) {
     const searchParams = new URLSearchParams()

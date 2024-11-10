@@ -8,16 +8,15 @@ import UNav from "app/components/UNav";
 export function TrendingScreen() {
   const { trendingIds, trendingQuery } = useTrending()
   const { markets, marketsQuery } = useMarkets(trendingIds)
+  const trendingMarkets = trendingIds.length > 0 ? markets : []
   const isFetching = marketsQuery.isFetching || trendingQuery.isFetching
 
   return (
     <Main maxHeight="100vh">
       <UNav title="Trending"/>
       <MarketList
-        markets={ isFetching ? [] : markets }
-        footer={
-          isFetching ? <Spinner size='large'/> : undefined
-        }
+        markets={ trendingMarkets }
+        footer={ isFetching ? <Spinner size='large'/> : undefined}
         refreshControl={
           <RefreshControl
             onRefresh={marketsQuery.refetch}

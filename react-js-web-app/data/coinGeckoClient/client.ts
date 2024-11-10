@@ -1,7 +1,7 @@
 const BASE_URL = 'https://api.coingecko.com/api/v3'
 const DEFAULT_HEADERS = {
   'accept': 'application/json',
-  'x-cg-demo-api-key': 'CG-8PHcXt7eskXbF21EUvRcJDmC'
+  'x-cg-demo-api-key': process.env.NEXT_PUBLIC_COIN_GECKO_API_KEY
 }
 
 const DEBUG = false

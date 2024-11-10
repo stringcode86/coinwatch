@@ -8,13 +8,15 @@ import { useFavorites } from 'app/features/favorite/hooks'
 export function FavoriteScreen() {
   const { favorites } = useFavorites()
   const { markets, marketsQuery } = useMarkets(Array.from(favorites))
+  const favoriteMarkets = favorites.size > 0 ? markets : []
+  const isFetching = marketsQuery.isFetching
 
   return (
     <Main maxHeight="100vh">
       <UNav title="Favorite"/>
       <MarketList
-        markets={favorites.size == 0 ? [] : markets}
-        footer={marketsQuery.isFetching ? <Spinner size='large'/> : undefined}
+        markets={favoriteMarkets}
+        footer={isFetching ? <Spinner size='large'/> : undefined}
         refreshControl={
           <RefreshControl
             onRefresh={marketsQuery.refetch}
