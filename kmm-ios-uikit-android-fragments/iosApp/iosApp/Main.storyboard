@@ -30,8 +30,8 @@
         <!--Coins-->
         <scene sceneID="e7Y-Ky-Qf5">
             <objects>
-                <collectionViewController storyboardIdentifier="CoinsViewController" title="Coins" id="rg1-sv-hCq" customClass="HomeViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Nee-mG-2km">
+                <collectionViewController storyboardIdentifier="HomeViewController" title="Coins" id="rg1-sv-hCq" customClass="HomeViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="Nee-mG-2km">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -112,30 +112,59 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MGa-1T-W5H" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="760" y="836"/>
+            <point key="canvasLocation" x="749" y="836"/>
         </scene>
         <!--Trending-->
         <scene sceneID="XJl-2z-cEm">
             <objects>
-                <collectionViewController id="6Dr-iX-F4l" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="YyF-K9-X5t">
+                <collectionViewController storyboardIdentifier="TrendingViewController" id="6Dr-iX-F4l" customClass="TrendingViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="YyF-K9-X5t">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="U49-bL-nu4">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="16" minimumInteritemSpacing="16" id="U49-bL-nu4">
                             <size key="itemSize" width="128" height="128"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="bte-Ja-uGL">
-                                <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MarketViewCell" id="ews-Y5-2Q9" customClass="MarketViewCell" customModule="iosApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="h7v-nS-XR8">
-                                    <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="qhp-zD-oLc">
+                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="rop-WH-Tgc">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JBp-ML-Qlt">
+                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="107.66666666666667"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fks-KS-byg">
+                                                    <rect key="frame" x="0.0" y="107.66666666666667" width="128" height="20.333333333333329"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="rop-WH-Tgc" firstAttribute="top" secondItem="qhp-zD-oLc" secondAttribute="top" id="69u-EF-SjF"/>
+                                        <constraint firstAttribute="bottom" secondItem="rop-WH-Tgc" secondAttribute="bottom" id="Mqv-hv-wBp"/>
+                                        <constraint firstItem="rop-WH-Tgc" firstAttribute="leading" secondItem="qhp-zD-oLc" secondAttribute="leading" id="Wf1-ga-8ch"/>
+                                        <constraint firstAttribute="trailing" secondItem="rop-WH-Tgc" secondAttribute="trailing" id="ZO2-iO-3xD"/>
+                                    </constraints>
                                 </collectionViewCellContentView>
+                                <connections>
+                                    <outlet property="nameLabel" destination="JBp-ML-Qlt" id="RTR-t0-OVO"/>
+                                    <outlet property="priceLabel" destination="fks-KS-byg" id="ROX-b2-4YO"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -169,30 +198,59 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JJy-ND-Urv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="761" y="119"/>
+            <point key="canvasLocation" x="749" y="118"/>
         </scene>
         <!--Favorite-->
         <scene sceneID="G5Y-qh-tYv">
             <objects>
-                <collectionViewController id="aLn-s1-nuI" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Soz-8k-hjY">
+                <collectionViewController storyboardIdentifier="FavoriteViewController" id="aLn-s1-nuI" customClass="FavoriteViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="Soz-8k-hjY">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="VD5-bA-bJL">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="16" minimumInteritemSpacing="16" id="VD5-bA-bJL">
                             <size key="itemSize" width="128" height="128"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="loW-NH-fBy">
-                                <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MarketViewCell" id="qQl-Wk-NEJ" customClass="MarketViewCell" customModule="iosApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="sGt-01-Iqp">
-                                    <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="qF1-3w-clv">
+                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Qa0-tj-S3Q">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="df5-6s-m2A">
+                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="107.66666666666667"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Srr-rO-rPc">
+                                                    <rect key="frame" x="0.0" y="107.66666666666667" width="128" height="20.333333333333329"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Qa0-tj-S3Q" firstAttribute="top" secondItem="qF1-3w-clv" secondAttribute="top" id="0Uy-S2-Auh"/>
+                                        <constraint firstAttribute="bottom" secondItem="Qa0-tj-S3Q" secondAttribute="bottom" id="Ga1-hr-Hg1"/>
+                                        <constraint firstItem="Qa0-tj-S3Q" firstAttribute="leading" secondItem="qF1-3w-clv" secondAttribute="leading" id="Pu8-b7-rWQ"/>
+                                        <constraint firstAttribute="trailing" secondItem="Qa0-tj-S3Q" secondAttribute="trailing" id="Zwp-ki-shl"/>
+                                    </constraints>
                                 </collectionViewCellContentView>
+                                <connections>
+                                    <outlet property="nameLabel" destination="df5-6s-m2A" id="cM4-k5-DaW"/>
+                                    <outlet property="priceLabel" destination="Srr-rO-rPc" id="BYt-Vx-0Qd"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -211,10 +269,10 @@
             </objects>
             <point key="canvasLocation" x="1540" y="118"/>
         </scene>
-        <!--View Controller-->
+        <!--Market Detail View Controller-->
         <scene sceneID="hF5-G7-WEh">
             <objects>
-                <viewController id="vk2-E5-1yA" sceneMemberID="viewController">
+                <viewController id="vk2-E5-1yA" customClass="MarketDetailViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wGx-eA-hsb">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -227,10 +285,10 @@
             </objects>
             <point key="canvasLocation" x="2371" y="119"/>
         </scene>
-        <!--Root Tab Bar Controller-->
+        <!--Tab Bar Controller-->
         <scene sceneID="CdU-tJ-wlN">
             <objects>
-                <tabBarController storyboardIdentifier="RootTabBarController" id="zMk-3j-OtI" customClass="RootTabBarController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController id="zMk-3j-OtI" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0Sq-hP-zMF">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -248,7 +306,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="coJ-5S-c3n"/>
+        <segue reference="lOT-yS-cJM"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="chart.line.uptrend.xyaxis" catalog="system" width="128" height="102"/>

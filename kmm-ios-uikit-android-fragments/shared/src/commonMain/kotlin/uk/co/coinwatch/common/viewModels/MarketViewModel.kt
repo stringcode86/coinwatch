@@ -1,6 +1,6 @@
 package uk.co.coinwatch.common.viewModels
 
-data class Market(
+data class MarketViewModel(
     val id: String,
     val name: String,
     val imgUrl: String?,

@@ -18,6 +18,7 @@ interface TrendingPresenter {
 class DefaultTrendingPresenter(
     private val view: WeakRef<TrendingView>,
     private val interactor: TrendingInteractor,
+    private val wireframe: TrendingWireframe,
 ): TrendingPresenter {
     private val bgScope = CoroutineScope(Dispatchers.Default)
     private val uiScope = CoroutineScope(Dispatchers.Main)
@@ -45,7 +46,7 @@ class DefaultTrendingPresenter(
         return if (markets.isEmpty()) TrendingViewModel.Loading
         else TrendingViewModel.Loaded(
             markets.map {
-                TrendingViewModel.Loaded.Market(
+                uk.co.coinwatch.common.viewModels.MarketViewModel(
                     it.id,
                     it.name,
                     it.image,

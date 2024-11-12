@@ -1,25 +1,27 @@
-package uk.co.coinwatch.modules.market
+package uk.co.coinwatch.modules.marketDetail
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import uk.co.coinwatch.common.utils.WeakRef
 import uk.co.coinwatch.services.coinGecko.model.Market
+import uk.co.coinwatch.common.viewModels.MarketViewModel
 
-sealed class MarketPresenterEvent {
-    object Reload: MarketPresenterEvent()
-    data class Search(val term: String?): MarketPresenterEvent()
+sealed class MarketDetailPresenterEvent {
+    object Reload: MarketDetailPresenterEvent()
+    data class Search(val term: String?): MarketDetailPresenterEvent()
 }
 
-interface MarketPresenter {
+interface MarketDetailPresenter {
     fun present()
-    fun handle(event: MarketPresenterEvent)
+    fun handle(event: MarketDetailPresenterEvent)
 }
 
-class DefaultMarketPresenter(
-    private val view: WeakRef<MarketView>,
-    private val interactor: MarketInteractor,
-): MarketPresenter {
+class DefaultMarketDetailPresenter(
+    private val view: WeakRef<MarketDetailView>,
+    private val interactor: MarketDetailInteractor,
+    private val wireframe: MarketDetailWireframe,
+): MarketDetailPresenter {
     private val bgScope = CoroutineScope(Dispatchers.Default)
     private val uiScope = CoroutineScope(Dispatchers.Main)
     private var markets = emptyList<Market>()
@@ -35,18 +37,18 @@ class DefaultMarketPresenter(
         }
     }
 
-    override fun handle(event: MarketPresenterEvent) {
+    override fun handle(event: MarketDetailPresenterEvent) {
         println("[DefaultMarketPresenter] handle $event")
     }
 
     private fun updateView() =
         view.get()?.update(viewModel())
 
-    private fun viewModel(): MarketViewModel {
-        return if (markets.isEmpty()) MarketViewModel.Loading
-        else MarketViewModel.Loaded(
+    private fun viewModel(): MarketDetailViewModel {
+        return if (markets.isEmpty()) MarketDetailViewModel.Loading
+        else MarketDetailViewModel.Loaded(
             markets.map {
-                MarketViewModel.Loaded.Market(
+                MarketViewModel(
                     it.id,
                     it.name,
                     it.image,

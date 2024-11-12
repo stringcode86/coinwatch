@@ -4,9 +4,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import uk.co.coinwatch.common.utils.WeakRef
-import uk.co.coinwatch.modules.favorite.FavoriteInteractor
-import uk.co.coinwatch.modules.favorite.FavoriteView
-import uk.co.coinwatch.modules.favorite.FavoriteViewModel
+import uk.co.coinwatch.common.viewModels.MarketViewModel
 import uk.co.coinwatch.services.coinGecko.model.Market
 
 sealed class FavoritePresenterEvent {
@@ -22,6 +20,7 @@ interface FavoritePresenter {
 class DefaultFavoritePresenter(
     private val view: WeakRef<FavoriteView>,
     private val interactor: FavoriteInteractor,
+    private val wireframe: FavoriteWireframe,
 ): FavoritePresenter {
     private val bgScope = CoroutineScope(Dispatchers.Default)
     private val uiScope = CoroutineScope(Dispatchers.Main)
@@ -49,7 +48,7 @@ class DefaultFavoritePresenter(
         return if (markets.isEmpty()) FavoriteViewModel.Loading
         else FavoriteViewModel.Loaded(
             markets.map {
-                FavoriteViewModel.Loaded.Market(
+                MarketViewModel(
                     it.id,
                     it.name,
                     it.image,

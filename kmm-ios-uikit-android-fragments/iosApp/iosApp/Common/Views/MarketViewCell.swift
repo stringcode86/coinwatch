@@ -13,19 +13,14 @@ class MarketViewCell: UICollectionViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     
-    var tmpBg: UIColor = .systemBackground
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        configureUI()
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        clipsToBounds = false
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = .init(width: 1, height: 1)
-        layer.shadowRadius = 8
-        layer.shadowOpacity = 1
         layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: 16).cgPath
-        contentView.backgroundColor = .secondarySystemBackground
-        contentView.layer.cornerRadius = 16
-        contentView.clipsToBounds = true
     }
     
     func update(name: String, price: String?) -> Self {
@@ -33,11 +28,22 @@ class MarketViewCell: UICollectionViewCell {
         priceLabel.text = price
         return self
     }
+    
+    private func configureUI() {
+        clipsToBounds = false
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowRadius = 8
+        layer.shadowOffset = .zero
+        layer.shadowOpacity = 0.25
+        contentView.backgroundColor = .secondarySystemBackground
+        contentView.layer.cornerRadius = 16
+        contentView.clipsToBounds = true
+    }
 }
 
 extension MarketViewCell {
     
-    func update(_ viewModel: HomeViewModel.LoadedMarket) -> Self {
+    func update(_ viewModel: MarketViewModel) -> Self {
         return update(name: viewModel.name, price: viewModel.price)
     }
 }

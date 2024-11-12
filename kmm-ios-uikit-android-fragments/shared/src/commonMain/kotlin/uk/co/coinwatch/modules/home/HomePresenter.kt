@@ -4,6 +4,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import uk.co.coinwatch.common.utils.WeakRef
+import uk.co.coinwatch.common.viewModels.MarketViewModel
 import uk.co.coinwatch.services.coinGecko.model.Market
 
 sealed class HomePresenterEvent {
@@ -19,6 +20,7 @@ interface HomePresenter {
 class DefaultHomePresenter(
     private val view: WeakRef<HomeView>,
     private val interactor: HomeInteractor,
+    private val wireframe: HomeWireframe,
 ): HomePresenter {
     private val bgScope = CoroutineScope(Dispatchers.Default)
     private val uiScope = CoroutineScope(Dispatchers.Main)
@@ -46,7 +48,7 @@ class DefaultHomePresenter(
         return if (markets.isEmpty()) HomeViewModel.Loading
         else HomeViewModel.Loaded(
             markets.map {
-                HomeViewModel.Loaded.Market(
+                MarketViewModel(
                     it.id,
                     it.name,
                     it.image,
