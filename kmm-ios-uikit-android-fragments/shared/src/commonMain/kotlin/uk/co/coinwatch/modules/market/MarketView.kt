@@ -1,4 +1,5 @@
 package uk.co.coinwatch.modules.market
 
-class MarketView {
+interface MarketView {
+    fun update(viewModel: MarketViewModel)
 }

@@ -55,7 +55,6 @@ class DefaultHomePresenter(
                     it.priceChangePercentage24h.toString(), // TODO: Format
                     it.totalVolume.toString(), // TODO: Format
                     it.marketCap.toString(), // TODO: Format
-
                 )
             }
         )

@@ -1,4 +1,5 @@
-package uk.co.coinwatch.modules.home.favorite
+package uk.co.coinwatch.modules.favorite
 
-class FavoriteView {
+interface FavoriteView {
+    fun update(viewModel: FavoriteViewModel)
 }

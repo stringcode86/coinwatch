@@ -1,4 +1,5 @@
 package uk.co.coinwatch.modules.trending
 
-class TrendingView {
+interface TrendingView {
+    fun update(viewModel: TrendingViewModel)
 }
