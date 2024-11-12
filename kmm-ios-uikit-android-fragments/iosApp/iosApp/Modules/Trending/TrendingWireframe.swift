@@ -37,7 +37,8 @@ class DefaultTrendingWireframe: TrendingWireframe {
 
     func navigate(destination___ destination: TrendingWireframeDestination) {
         if let dest = destination as? TrendingWireframeDestination.Market {
-            marketDetailWireframeFactory.make(vc).present()
+            let context = MarketDetailWireframeContext(id: dest.id, imgUrl: dest.imgUrl)
+            marketDetailWireframeFactory.make(vc, context: context).present()
         }
     }
 

@@ -6,11 +6,14 @@ import kotlinx.coroutines.launch
 import uk.co.coinwatch.common.utils.WeakRef
 import uk.co.coinwatch.common.viewModels.MarketViewModel
 import uk.co.coinwatch.common.viewModels.from
+import uk.co.coinwatch.modules.marketDetail.MarketDetailPresenterEvent
 import uk.co.coinwatch.services.coinGecko.model.Market
 
 sealed class HomePresenterEvent {
     object Reload: HomePresenterEvent()
+    object LoadNextPage: HomePresenterEvent()
     data class Search(val term: String?): HomePresenterEvent()
+    data class Navigate(val markIdx: Int): HomePresenterEvent()
 }
 
 interface HomePresenter {
@@ -38,8 +41,18 @@ class DefaultHomePresenter(
         }
     }
 
-    override fun handle(event: HomePresenterEvent) {
-        println("[DefaultHomePresenter] handle $event")
+    override fun handle(event: HomePresenterEvent) = when (event) {
+        is HomePresenterEvent.Reload -> present()
+        is HomePresenterEvent.LoadNextPage -> TODO("Load next page")
+        is HomePresenterEvent.Search -> TODO("Search")
+        is HomePresenterEvent.Navigate -> handleNavigate(event)
+    }
+
+    private fun handleNavigate(event: HomePresenterEvent.Navigate) {
+        val market = markets[event.markIdx]
+        wireframe.navigate(
+            HomeWireframeDestination.Market(market.id, market.image)
+        )
     }
 
     private fun updateView() =

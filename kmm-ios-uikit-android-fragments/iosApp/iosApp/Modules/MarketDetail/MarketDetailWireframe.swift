@@ -10,15 +10,18 @@ import UIKit
 import shared
 
 class DefaultMarketDetailWireframe: MarketDetailWireframe {
+    private let context: MarketDetailWireframeContext
     private let coinGeckoService: CoinGeckoService
     private weak var parent: UIViewController?
     private weak var vc: UIViewController?
 
     init(
         _ parent: UIViewController?,
+        context: MarketDetailWireframeContext,
         coinGeckoService: CoinGeckoService
     ) {
         self.parent = parent
+        self.context = context
         self.coinGeckoService = coinGeckoService
     }
     
@@ -37,6 +40,7 @@ class DefaultMarketDetailWireframe: MarketDetailWireframe {
         let presenter = DefaultMarketDetailPresenter(
             view: WeakRef(referred: vc),
             interactor: interactor,
+            context: context,
             wireframe: self
         )
         vc.presenter = presenter

@@ -63,6 +63,15 @@ class HomeViewController: UICollectionViewController, HomeView, UICollectionView
             .update(vm.markets[indexPath.item])
     }
     
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        presenter.handle(
+            event_: HomePresenterEvent.Navigate(markIdx: Int32(indexPath.item))
+        )
+    }
+    
     
     // MARK: - UICollecitonViewFlowDelegate
     

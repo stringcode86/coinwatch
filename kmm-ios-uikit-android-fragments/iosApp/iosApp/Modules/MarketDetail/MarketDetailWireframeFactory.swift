@@ -10,7 +10,10 @@ import UIKit
 import shared
 
 protocol MarketDetailWireframeFactory: AnyObject {
-    func make(_ parent: UIViewController?) -> MarketDetailWireframe
+    func make(
+        _ parent: UIViewController?,
+        context: MarketDetailWireframeContext
+    ) -> MarketDetailWireframe
 }
 
 class DefaultMarketDetailWireframeFactory: MarketDetailWireframeFactory {
@@ -21,9 +24,13 @@ class DefaultMarketDetailWireframeFactory: MarketDetailWireframeFactory {
         self.coinGeckoService = coinGeckoService
     }
     
-    func make(_ parent: UIViewController?) -> MarketDetailWireframe {
+    func make(
+        _ parent: UIViewController?,
+        context: MarketDetailWireframeContext
+    ) -> MarketDetailWireframe {
         return DefaultMarketDetailWireframe(
             parent,
+            context: context,
             coinGeckoService: coinGeckoService
         )
     }

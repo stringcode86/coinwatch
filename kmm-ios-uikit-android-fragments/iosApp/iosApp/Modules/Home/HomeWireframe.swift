@@ -37,7 +37,8 @@ class DefaultHomeWireframe: HomeWireframe {
     
     func navigate(destination_ destination: HomeWireframeDestination) {
         if let dest = destination as? HomeWireframeDestination.Market {
-            marketDetailWireframeFactory.make(vc).present()
+            let context = MarketDetailWireframeContext(id: dest.id, imgUrl: dest.imgUrl)
+            marketDetailWireframeFactory.make(vc, context: context).present()
         }
     }
 
@@ -50,6 +51,7 @@ class DefaultHomeWireframe: HomeWireframe {
             wireframe: self
         )
         vc.presenter = presenter
+        self.vc = vc
         return UINavigationController(rootViewController: vc)
     }
 }

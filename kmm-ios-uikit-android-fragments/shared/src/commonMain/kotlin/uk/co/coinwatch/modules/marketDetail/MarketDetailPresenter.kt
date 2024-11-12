@@ -21,6 +21,7 @@ interface MarketDetailPresenter {
 class DefaultMarketDetailPresenter(
     private val view: WeakRef<MarketDetailView>,
     private val interactor: MarketDetailInteractor,
+    private val context: MarketDetailWireframeContext,
     private val wireframe: MarketDetailWireframe,
 ): MarketDetailPresenter {
     private val bgScope = CoroutineScope(Dispatchers.Default)
@@ -28,12 +29,14 @@ class DefaultMarketDetailPresenter(
     private var markets = emptyList<Market>()
 
     override fun present() {
-        updateView()
+//        updateView()
+        mockUpdateView()
         bgScope.launch {
             val newMarkets = interactor.fetchMarket()
             uiScope.launch {
                 markets = newMarkets
-                updateView()
+//                updateView()
+                mockUpdateView()
             }
         }
     }
@@ -42,11 +45,19 @@ class DefaultMarketDetailPresenter(
         println("[DefaultMarketPresenter] handle $event")
     }
 
+    private fun mockUpdateView() =
+        view.get()?.update(
+            if (markets.isEmpty()) MarketDetailViewModel.Loading
+            else MarketDetailViewModel.Loaded(
+                MarketViewModel(context.id, context.id, context.imgUrl, null, null, null, null, null, null)
+            )
+        )
+
     private fun updateView() =
         view.get()?.update(viewModel())
 
     private fun viewModel(): MarketDetailViewModel {
         return if (markets.isEmpty()) MarketDetailViewModel.Loading
-        else MarketDetailViewModel.Loaded(markets.map { MarketViewModel.from(it)})
+        else MarketDetailViewModel.Loaded(MarketViewModel.from(markets[0]))
     }
 }

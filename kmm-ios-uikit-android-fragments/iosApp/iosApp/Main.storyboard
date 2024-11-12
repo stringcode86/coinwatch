@@ -452,7 +452,7 @@
         <!--Market Detail View Controller-->
         <scene sceneID="hF5-G7-WEh">
             <objects>
-                <viewController id="vk2-E5-1yA" customClass="MarketDetailViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MarketDetailViewController" id="vk2-E5-1yA" customClass="MarketDetailViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wGx-eA-hsb">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

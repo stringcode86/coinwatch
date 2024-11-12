@@ -37,7 +37,8 @@ class DefaultFavoriteWireframe: FavoriteWireframe {
 
     func navigate(destination: FavoriteWireframeDestination) {
         if let dest = destination as? FavoriteWireframeDestination.Market {
-            marketDetailWireframeFactory.make(vc).present()
+            let context = MarketDetailWireframeContext(id: dest.id, imgUrl: dest.imgUrl)
+            marketDetailWireframeFactory.make(vc, context: context).present()
         }
     }
 

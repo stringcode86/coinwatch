@@ -20,6 +20,6 @@ class MarketDetailViewController: UIViewController, MarketDetailView {
     }
     
     func update(viewModel__ viewModel: MarketDetailViewModel) {
-        print("[MarketDetailViewController] update(_ viewModel)")
+        print("[MarketDetailViewController] update(_ viewModel) \(viewModel)")
     }
 }
