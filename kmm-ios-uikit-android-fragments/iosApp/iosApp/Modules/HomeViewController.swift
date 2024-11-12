@@ -31,7 +31,7 @@ class HomeViewController: UICollectionViewController, HomeView, UICollectionView
     
     // MARK: - HomeView
     
-    func update(viewModel: HomeViewModel) {
+    func update(viewModel_ viewModel: HomeViewModel) {
         self.viewModel = viewModel
         self.collectionView.performBatchUpdates { [weak self] in
             self?.collectionView.reloadSections(IndexSet(integer: 0))
