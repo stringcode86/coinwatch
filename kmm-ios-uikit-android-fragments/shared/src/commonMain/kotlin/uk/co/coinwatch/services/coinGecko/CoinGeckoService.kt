@@ -34,7 +34,7 @@ interface CoinGeckoService {
      */
     @Throws(Throwable::class)
     suspend fun market(
-        ids: List<String>?,
+        ids: List<String>? = null,
         quote: String = "usd",
         page: Int = 0,
         change: String = "24h"
@@ -70,7 +70,7 @@ class DefaultCoinGeckoService : CoinGeckoService {
     private val baseURL: String = "https://api.coingecko.com/api/v3"
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default
     private val client: HttpClient = HttpClient() {
-        Logging { level = LogLevel.NONE; logger = Logger.SIMPLE }
+        Logging { level = LogLevel.ALL; logger = Logger.SIMPLE }
         install(ContentNegotiation) { json(geckoJson, contentType()) }
     }
 
