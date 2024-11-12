@@ -28,6 +28,7 @@
 		1F231ACB2CE3844900FFFEF5 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F231ACA2CE3844900FFFEF5 /* ImageCacheService.swift */; };
 		1F231ACD2CE3847D00FFFEF5 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F231ACC2CE3847800FFFEF5 /* String+Extensions.swift */; };
 		1F231ACF2CE385E400FFFEF5 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F231ACE2CE385E100FFFEF5 /* ChartView.swift */; };
+		1F231AD12CE3F37000FFFEF5 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F231AD02CE3F37000FFFEF5 /* GradientView.swift */; };
 		1FDD1DD22CDA7C0100724264 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD1DD12CDA7BF800724264 /* AppDelegate.swift */; };
 		1FDD1DD42CDA7C5A00724264 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD1DD32CDA7C5500724264 /* SceneDelegate.swift */; };
 		1FDD1DD82CDA7E5B00724264 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD1DD72CDA7E5B00724264 /* HomeViewController.swift */; };
@@ -71,6 +72,7 @@
 		1F231ACA2CE3844900FFFEF5 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
 		1F231ACC2CE3847800FFFEF5 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		1F231ACE2CE385E100FFFEF5 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
+		1F231AD02CE3F37000FFFEF5 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		1FDD1DD12CDA7BF800724264 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1FDD1DD32CDA7C5500724264 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		1FDD1DD72CDA7E5B00724264 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 			children = (
 				1F231AA42CE3064C00FFFEF5 /* MarketViewCell.swift */,
 				1F231ACE2CE385E100FFFEF5 /* ChartView.swift */,
+				1F231AD02CE3F37000FFFEF5 /* GradientView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				1F231ACD2CE3847D00FFFEF5 /* String+Extensions.swift in Sources */,
 				1FDD1DD22CDA7C0100724264 /* AppDelegate.swift in Sources */,
 				1F231AB22CE357C800FFFEF5 /* HomeWireframe.swift in Sources */,
+				1F231AD12CE3F37000FFFEF5 /* GradientView.swift in Sources */,
 				1F231AC82CE3808D00FFFEF5 /* UIImageView+Cache.swift in Sources */,
 				1F231ACF2CE385E400FFFEF5 /* ChartView.swift in Sources */,
 			);

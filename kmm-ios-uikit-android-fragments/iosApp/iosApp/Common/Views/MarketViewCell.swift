@@ -17,6 +17,7 @@ class MarketViewCell: UICollectionViewCell {
     @IBOutlet weak var volLabel: UILabel!
     @IBOutlet weak var chartView: ChartView!
     @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var gradientView: GradientView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -48,6 +49,10 @@ class MarketViewCell: UICollectionViewCell {
         priceLabel.textColor = pctLabel.textColor
         chartView.tintColor = pctLabel.textColor
         chartView.yValues = chartYValues
+        gradientView.colors = [
+            pctLabel.textColor.withAlphaComponent(0.0),
+            pctLabel.textColor.withAlphaComponent(0.25)
+        ]
         return self
     }
     
