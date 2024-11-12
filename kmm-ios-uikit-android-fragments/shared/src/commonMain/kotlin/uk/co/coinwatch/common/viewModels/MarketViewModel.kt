@@ -7,6 +7,6 @@ data class MarketViewModel(
     val price: String?,
     val up: Boolean?,
     val pctChange: String?,
-    val volCap: String?,
+    val vol: String?,
     val mrkCap: String?,
 )

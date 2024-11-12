@@ -41,8 +41,8 @@ class FavoriteViewController: UICollectionViewController, FavoriteView, UICollec
     }
 
     override func collectionView(
-            _ collectionView: UICollectionView,
-            numberOfItemsInSection section: Int
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
     ) -> Int {
         switch viewModel {
         case let vm as FavoriteViewModel.Loaded:
@@ -53,23 +53,23 @@ class FavoriteViewController: UICollectionViewController, FavoriteView, UICollec
     }
 
     override func collectionView(
-            _ collectionView: UICollectionView,
-            cellForItemAt indexPath: IndexPath
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         guard let vm = viewModel as? FavoriteViewModel.Loaded else {
             fatalError("[FavoriteViewController] unexpected viewModel \(viewModel)")
         }
         return collectionView.dequeue(MarketViewCell.self, for: indexPath)
-                .update(vm.markets[indexPath.item])
+            .update(vm.markets[indexPath.item])
     }
 
 
     // MARK: - UICollecitonViewFlowDelegate
 
     func collectionView(
-            _ collectionView: UICollectionView,
-            layout collectionViewLayout: UICollectionViewLayout,
-            sizeForItemAt indexPath: IndexPath
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         cellSize
     }
@@ -78,8 +78,9 @@ class FavoriteViewController: UICollectionViewController, FavoriteView, UICollec
 
     private func invalidateCellSizeCache() {
         let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+        let inset = (layout?.sectionInset.left ?? 8) + (layout?.sectionInset.right ?? 8)
         let spacing = layout?.minimumInteritemSpacing ?? 16
-        let lenght = floor((view.bounds.width - spacing) / 2)
+        let lenght = floor((view.bounds.width - spacing - inset) / 2)
         cellSize = .init(width: lenght, height: lenght)
     }
 }

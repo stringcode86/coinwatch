@@ -78,8 +78,9 @@ class HomeViewController: UICollectionViewController, HomeView, UICollectionView
     
     private func invalidateCellSizeCache() {
         let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+        let inset = (layout?.sectionInset.left ?? 8) + (layout?.sectionInset.right ?? 8)
         let spacing = layout?.minimumInteritemSpacing ?? 16
-        let lenght = floor((view.bounds.width - spacing) / 2)
+        let lenght = floor((view.bounds.width - spacing - inset) / 2)
         cellSize = .init(width: lenght, height: lenght)
     }
 }

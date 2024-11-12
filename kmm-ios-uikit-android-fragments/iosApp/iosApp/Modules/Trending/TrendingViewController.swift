@@ -41,8 +41,8 @@ class TrendingViewController: UICollectionViewController, TrendingView, UICollec
     }
 
     override func collectionView(
-            _ collectionView: UICollectionView,
-            numberOfItemsInSection section: Int
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
     ) -> Int {
         switch viewModel {
         case let vm as TrendingViewModel.Loaded:
@@ -53,8 +53,8 @@ class TrendingViewController: UICollectionViewController, TrendingView, UICollec
     }
 
     override func collectionView(
-            _ collectionView: UICollectionView,
-            cellForItemAt indexPath: IndexPath
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         guard let vm = viewModel as? TrendingViewModel.Loaded else {
             fatalError("[TrendingViewController] unexpected viewModel \(viewModel)")
@@ -67,9 +67,9 @@ class TrendingViewController: UICollectionViewController, TrendingView, UICollec
     // MARK: - UICollecitonViewFlowDelegate
 
     func collectionView(
-            _ collectionView: UICollectionView,
-            layout collectionViewLayout: UICollectionViewLayout,
-            sizeForItemAt indexPath: IndexPath
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         cellSize
     }
@@ -78,8 +78,9 @@ class TrendingViewController: UICollectionViewController, TrendingView, UICollec
 
     private func invalidateCellSizeCache() {
         let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+        let inset = (layout?.sectionInset.left ?? 8) + (layout?.sectionInset.right ?? 8)
         let spacing = layout?.minimumInteritemSpacing ?? 16
-        let lenght = floor((view.bounds.width - spacing) / 2)
+        let lenght = floor((view.bounds.width - spacing - inset) / 2)
         cellSize = .init(width: lenght, height: lenght)
     }
 }

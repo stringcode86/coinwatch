@@ -10,7 +10,12 @@ import UIKit
 import shared
 
 class MarketViewCell: UICollectionViewCell {
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var pctLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var capLabel: UILabel!
+    @IBOutlet weak var volLabel: UILabel!
+    @IBOutlet weak var chartView: ChartView!
     @IBOutlet weak var priceLabel: UILabel!
     
     override func awakeFromNib() {
@@ -23,9 +28,23 @@ class MarketViewCell: UICollectionViewCell {
         layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: 16).cgPath
     }
     
-    func update(name: String, price: String?) -> Self {
+    func update(
+        isUp: Bool,
+        imgUrlStr: String?,
+        pct: String?,
+        name: String,
+        cap: String?,
+        vol: String?,
+        price: String?
+    ) -> Self {
+        imageView.setImage(url: imgUrlStr)
+        pctLabel.text = pct
         nameLabel.text = name
+        capLabel.text = cap
+        volLabel.text = vol
         priceLabel.text = price
+        pctLabel.textColor = isUp ? .systemGreen : .systemRed
+        priceLabel.textColor = pctLabel.textColor
         return self
     }
     
@@ -44,6 +63,14 @@ class MarketViewCell: UICollectionViewCell {
 extension MarketViewCell {
     
     func update(_ viewModel: MarketViewModel) -> Self {
-        return update(name: viewModel.name, price: viewModel.price)
+        return update(
+            isUp: viewModel.up?.boolValue ?? false,
+            imgUrlStr: viewModel.imgUrl,
+            pct: viewModel.pctChange,
+            name: viewModel.name,
+            cap: viewModel.mrkCap,
+            vol: viewModel.vol,
+            price: viewModel.price
+        )
     }
 }
