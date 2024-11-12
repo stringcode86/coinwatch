@@ -4,6 +4,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import uk.co.coinwatch.common.utils.WeakRef
+import uk.co.coinwatch.common.viewModels.MarketViewModel
+import uk.co.coinwatch.common.viewModels.from
 import uk.co.coinwatch.services.coinGecko.model.Market
 
 sealed class TrendingPresenterEvent {
@@ -44,19 +46,6 @@ class DefaultTrendingPresenter(
 
     private fun viewModel(): TrendingViewModel {
         return if (markets.isEmpty()) TrendingViewModel.Loading
-        else TrendingViewModel.Loaded(
-            markets.map {
-                uk.co.coinwatch.common.viewModels.MarketViewModel(
-                    it.id,
-                    it.name,
-                    it.image,
-                    it.currentPrice.toString(), // TODO: Format
-                    (it.priceChange24h ?: 0.0) > 0.0, // TODO: Format
-                    it.priceChangePercentage24h.toString(), // TODO: Format
-                    it.totalVolume.toString(), // TODO: Format
-                    it.marketCap.toString(), // TODO: Format
-                )
-            }
-        )
+        else TrendingViewModel.Loaded(markets.map { MarketViewModel.from(it)})
     }
 }

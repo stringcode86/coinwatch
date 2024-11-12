@@ -87,7 +87,8 @@ class DefaultCoinGeckoService : CoinGeckoService {
 
         val url = baseURL +
             "/coins/markets?vs_currency=$quote$idsStr&order=market_cap_desc" +
-            "&per_page=250&page=$page&price_change_percentage=$change"
+            "&per_page=50&page=$page&price_change_percentage=$change" +
+            "&sparkline=true"
         val bodyStr = client.get(url).bodyAsText()
         return@withContext geckoJson.decodeFromString(bodyStr)
     }

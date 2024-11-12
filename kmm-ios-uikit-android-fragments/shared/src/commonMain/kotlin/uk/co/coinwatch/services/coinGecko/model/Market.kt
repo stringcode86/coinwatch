@@ -51,4 +51,9 @@ data class Market(
     val atlDate: String?,
     @SerialName("last_updated")
     val lastUpdated: String?,
-)
+    @SerialName("sparkline_in_7d")
+    val sparkline7d: SparkLine?,
+) {
+    @Serializable
+    data class SparkLine(val price: List<Double>?)
+}
