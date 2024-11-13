@@ -29,6 +29,7 @@
 		1F231ACD2CE3847D00FFFEF5 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F231ACC2CE3847800FFFEF5 /* String+Extensions.swift */; };
 		1F231ACF2CE385E400FFFEF5 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F231ACE2CE385E100FFFEF5 /* ChartView.swift */; };
 		1F231AD12CE3F37000FFFEF5 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F231AD02CE3F37000FFFEF5 /* GradientView.swift */; };
+		1FC7BC572CE4CA340085A7F7 /* Numeric+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7BC562CE4CA2D0085A7F7 /* Numeric+extensions.swift */; };
 		1FDD1DD22CDA7C0100724264 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD1DD12CDA7BF800724264 /* AppDelegate.swift */; };
 		1FDD1DD42CDA7C5A00724264 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD1DD32CDA7C5500724264 /* SceneDelegate.swift */; };
 		1FDD1DD82CDA7E5B00724264 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD1DD72CDA7E5B00724264 /* HomeViewController.swift */; };
@@ -73,6 +74,7 @@
 		1F231ACC2CE3847800FFFEF5 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		1F231ACE2CE385E100FFFEF5 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		1F231AD02CE3F37000FFFEF5 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		1FC7BC562CE4CA2D0085A7F7 /* Numeric+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Numeric+extensions.swift"; sourceTree = "<group>"; };
 		1FDD1DD12CDA7BF800724264 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1FDD1DD32CDA7C5500724264 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		1FDD1DD72CDA7E5B00724264 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				1FDD1DDF2CDAA69300724264 /* Storyboard+extensions.swift */,
 				1F231ACC2CE3847800FFFEF5 /* String+Extensions.swift */,
 				1F231AA22CE3056500FFFEF5 /* UICollectionView+extensions.swift */,
+				1FC7BC562CE4CA2D0085A7F7 /* Numeric+extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -328,6 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F231AC42CE36BFC00FFFEF5 /* RootWireframe.swift in Sources */,
+				1FC7BC572CE4CA340085A7F7 /* Numeric+extensions.swift in Sources */,
 				1F231AA32CE3056E00FFFEF5 /* UICollectionView+extensions.swift in Sources */,
 				1F231AB82CE358A800FFFEF5 /* FavoriteWireframeFactory.swift in Sources */,
 				1F231AC62CE370DE00FFFEF5 /* Boostrap.swift in Sources */,

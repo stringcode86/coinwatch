@@ -1,6 +1,5 @@
 package uk.co.coinwatch.services.coinGecko
 
-import uk.co.coinwatch.services.coinGecko.model.Candle
 import uk.co.coinwatch.services.coinGecko.model.Coin
 import uk.co.coinwatch.services.coinGecko.model.Market
 import io.ktor.client.HttpClient
@@ -13,6 +12,8 @@ import io.ktor.client.plugins.logging.SIMPLE
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
+import io.ktor.http.URLBuilder
+import io.ktor.http.encodeURLParameter
 import io.ktor.http.withCharset
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.utils.io.charsets.Charsets
@@ -23,6 +24,7 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.json.Json
+import uk.co.coinwatch.services.coinGecko.model.SearchResult
 
 /** Coin Gecko api service*/
 interface CoinGeckoService {
@@ -40,29 +42,10 @@ interface CoinGeckoService {
         change: String = "24h"
     ): List<Market>
     /**
-     * @param coinId - coin id (ethereum, bitcoin ...)
-     * @param quote - The target currency of market data (usd, eur, jpy, etc.)
-     * @param days - Because coins gecko devs are psychopaths candles are
-     * returned 1-2 days: 30min candles, 3-30 days: 4h, 31 days and beyond: 4d
+     * @param term - Search string
      */
     @Throws(Throwable::class)
-    suspend fun candles(coinId: String, quote: String, days: Int): List<Candle>
-    /** List of all coin gecko known coins */
-    @Throws(Throwable::class)
-    suspend fun coinsList(): List<Coin>
-}
-
-@OptIn(kotlinx.serialization.ExperimentalSerializationApi::class)
-private val geckoJson = Json {
-    encodeDefaults = true
-    isLenient = true
-    ignoreUnknownKeys = true
-    coerceInputValues = true
-    allowStructuredMapKeys = true
-    useAlternativeNames = false
-    prettyPrint = true
-    useArrayPolymorphism = true
-    explicitNulls = false
+    suspend fun search(term: String): List<Coin>
 }
 
 class DefaultCoinGeckoService : CoinGeckoService {
@@ -94,61 +77,27 @@ class DefaultCoinGeckoService : CoinGeckoService {
     }
 
     @Throws(Throwable::class)
-    override suspend fun candles(
-        coinId: String,
-        quote: String,
-        days: Int
-    ): List<Candle> = withContext(dispatcher) {
-        val url = baseURL + "/coins/$coinId/ohlc?vs_currency=$quote&days=$days"
-        val listCandles: List<List<Double>> = client.get(url).body()
-        var candles = listCandles.map {
-            Candle(
-                timestamp = Instant.fromEpochMilliseconds(it[0].toLong()),
-                open = it[1],
-                high = it[2],
-                low = it[3],
-                close = it[4],
-            )
-        }
-        if (days == 30 && !candles.isEmpty()) {
-            candles = fourHourToDaily(candles)
-        }
-        return@withContext candles
-    }
-
-    private fun fourHourToDaily(candles: List<Candle>): List<Candle> {
-        var daily = mutableListOf<Candle>()
-        var day = candles.first().timestamp.toLocalDateTime(TimeZone.UTC).dayOfMonth
-        var prev = candles.first()
-        var open = candles.first().open
-        var high = candles.first().high
-        var low = candles.first().low
-        for (candle in candles) {
-            if (candle.timestamp.toLocalDateTime(TimeZone.UTC).dayOfMonth != day) {
-                daily.add(Candle(prev.timestamp, open, high, low, prev.close))
-                day = candle.timestamp.toLocalDateTime(TimeZone.UTC).dayOfMonth
-                open = candle.open
-                high = candle.high
-                low = candle.low
-            }
-            if (candle.high > high)
-                high = candle.high
-            if (candle.low < low)
-                low = candle.low
-            prev = candle
-        }
-        daily.add(Candle(prev.timestamp, open, high, low, prev.close))
-        return daily
-    }
-
-    @Throws(Throwable::class)
-    override suspend fun coinsList(): List<Coin> = withContext(dispatcher){
-        val bodyStr = client.get(baseURL + "/coins/list?include_platform=true")
-            .bodyAsText()
-        return@withContext geckoJson.decodeFromString(bodyStr)
+    override suspend fun search(term: String): List<Coin> = withContext(dispatcher) {
+        val url = baseURL + "/search?query=" + term.encodeURLParameter()
+        val bodyStr = client.get(url).bodyAsText()
+        val result = geckoJson.decodeFromString<SearchResult>(bodyStr)
+        return@withContext result.coins
     }
 
     private fun contentType(): ContentType {
         return ContentType.Application.Json.withCharset(Charsets.UTF_8)
     }
+}
+
+@OptIn(kotlinx.serialization.ExperimentalSerializationApi::class)
+private val geckoJson = Json {
+    encodeDefaults = true
+    isLenient = true
+    ignoreUnknownKeys = true
+    coerceInputValues = true
+    allowStructuredMapKeys = true
+    useAlternativeNames = false
+    prettyPrint = true
+    useArrayPolymorphism = true
+    explicitNulls = false
 }

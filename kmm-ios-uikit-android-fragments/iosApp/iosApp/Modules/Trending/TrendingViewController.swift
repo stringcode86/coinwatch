@@ -17,6 +17,7 @@ class TrendingViewController: UICollectionViewController, TrendingView, UICollec
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Trending"
+        navigationController?.navigationBar.prefersLargeTitles = true
         presenter.present()
     }
 

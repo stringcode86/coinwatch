@@ -15,3 +15,6 @@ data class Coin(
         val ethereum: String?
     )
 }
+
+@Serializable
+data class SearchResult(val coins: List<Coin>)

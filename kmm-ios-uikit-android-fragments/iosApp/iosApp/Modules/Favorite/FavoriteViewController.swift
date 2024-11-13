@@ -17,6 +17,7 @@ class FavoriteViewController: UICollectionViewController, FavoriteView, UICollec
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Favorite"
+        navigationController?.navigationBar.prefersLargeTitles = true
         presenter.present()
     }
 

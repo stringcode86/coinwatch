@@ -9,7 +9,7 @@ interface HomeInteractor {
     @Throws(Throwable::class)
     suspend fun fetchMarkets(): List<Market>
     @Throws(Throwable::class)
-    suspend fun search(term: String): List<Market>
+    suspend fun search(term: String?): List<Market>
 }
 
 class DefaultHomeInteractor(
@@ -17,15 +17,14 @@ class DefaultHomeInteractor(
 ): HomeInteractor {
 
     @Throws(Throwable::class)
-    override suspend fun fetchMarkets(): List<Market> = withContext(Dispatchers.Default) {
-        val markets = service.market()
-        return@withContext markets
-    }
+    override suspend fun fetchMarkets(): List<Market> =
+        withContext(Dispatchers.Default) { return@withContext service.market() }
 
     @Throws(Throwable::class)
-    override suspend fun search(term: String): List<Market> {
-        println("[HomeInteractor] search $term")
-        return emptyList()
-    }
-
+    override suspend fun search(term: String?): List<Market> =
+        withContext(Dispatchers.Default) {
+            if (term.isNullOrEmpty()) return@withContext emptyList()
+            val ids = service.search(term).map { it.id }
+            return@withContext service.market(if (ids.isEmpty()) null else ids)
+        }
 }

@@ -13,11 +13,20 @@ class HomeViewController: UICollectionViewController, HomeView, UICollectionView
     var presenter: HomePresenter!
     private var viewModel: HomeViewModel = .Loading()
     private var cellSize: CGSize = .zero
+    private var searchController: UISearchController = {
+        let searchController = UISearchController()
+        searchController.searchBar.placeholder = "Search coins"
+        searchController.searchBar.searchBarStyle = .minimal
+        return searchController
+   }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Coins"
+        navigationController?.navigationBar.prefersLargeTitles = true
         presenter.present()
+        searchController.searchResultsUpdater = self
+        navigationItem.searchController = searchController
     }
     
     override func viewWillLayoutSubviews() {
@@ -67,9 +76,7 @@ class HomeViewController: UICollectionViewController, HomeView, UICollectionView
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        presenter.handle(
-            event_: HomePresenterEvent.Navigate(markIdx: Int32(indexPath.item))
-        )
+        presenter.handle(event_: .Navigate(markIdx: indexPath.item.int32))
     }
     
     
@@ -91,5 +98,14 @@ class HomeViewController: UICollectionViewController, HomeView, UICollectionView
         let spacing = layout?.minimumInteritemSpacing ?? 16
         let lenght = floor((view.bounds.width - spacing - inset) / 2)
         cellSize = .init(width: lenght, height: lenght)
+    }
+}
+
+// MARK: - UISearchResultsUpdating
+
+extension HomeViewController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        presenter.handle(event_: .Search(term: searchController.searchBar.text))
     }
 }
