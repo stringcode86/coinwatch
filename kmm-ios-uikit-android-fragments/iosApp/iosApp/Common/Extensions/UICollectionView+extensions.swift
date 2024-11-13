@@ -130,3 +130,10 @@ extension UICollectionView {
     }
 
 }
+
+extension UICollectionView {
+    
+    func flowLayout() -> UICollectionViewFlowLayout? {
+        return collectionViewLayout as? UICollectionViewFlowLayout
+    }
+}

@@ -9,29 +9,16 @@
 import UIKit
 import shared
 
-class HomeViewController: UICollectionViewController, HomeView, UICollectionViewDelegateFlowLayout {
+class HomeViewController: CardCollectionViewController, HomeView {
     var presenter: HomePresenter!
     private var viewModel: HomeViewModel = .Loading()
-    private var cellSize: CGSize = .zero
-    private var searchController: UISearchController = {
-        let searchController = UISearchController()
-        searchController.searchBar.placeholder = "Search coins"
-        searchController.searchBar.searchBarStyle = .minimal
-        return searchController
-   }()
+    private var searchController: UISearchController = .init()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Coins"
-        navigationController?.navigationBar.prefersLargeTitles = true
+        configureUI()
+        configureSearchController()
         presenter.present()
-        searchController.searchResultsUpdater = self
-        navigationItem.searchController = searchController
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        invalidateCellSizeCache()
     }
     
     // MARK: - HomeView
@@ -53,21 +40,18 @@ class HomeViewController: UICollectionViewController, HomeView, UICollectionView
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        switch viewModel {
-        case let vm as HomeViewModel.Loaded:
-            return vm.markets.count
-        default:
-            return 0
-        }
+        return (viewModel as? HomeViewModel.Loaded)?.markets.count ?? 0
     }
     
     override func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
+        
         guard let vm = viewModel as? HomeViewModel.Loaded else {
             fatalError("[HomeViewController] unexpected viewModel \(viewModel)")
         }
+        
         return collectionView.dequeue(MarketViewCell.self, for: indexPath)
             .update(vm.markets[indexPath.item])
     }
@@ -79,25 +63,18 @@ class HomeViewController: UICollectionViewController, HomeView, UICollectionView
         presenter.handle(event_: .Navigate(markIdx: indexPath.item.int32))
     }
     
-    
-    // MARK: - UICollecitonViewFlowDelegate
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath
-    ) -> CGSize {
-        cellSize
-    }
-    
     // MARK: - Utils
-    
-    private func invalidateCellSizeCache() {
-        let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
-        let inset = (layout?.sectionInset.left ?? 8) + (layout?.sectionInset.right ?? 8)
-        let spacing = layout?.minimumInteritemSpacing ?? 16
-        let lenght = floor((view.bounds.width - spacing - inset) / 2)
-        cellSize = .init(width: lenght, height: lenght)
+
+    private func configureUI() {
+        navigationItem.title = "Coins"
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+
+    private func configureSearchController() {
+        searchController.searchBar.placeholder = "Search coins"
+        searchController.searchBar.searchBarStyle = .minimal
+        searchController.searchResultsUpdater = self
+        navigationItem.searchController = searchController
     }
 }
 
