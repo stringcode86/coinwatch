@@ -2,7 +2,7 @@ package uk.co.coinwatch.modules.home
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.channels.BufferOverflow.DROP_OLDEST
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import uk.co.coinwatch.common.utils.WeakRef
 import uk.co.coinwatch.common.viewModels.MarketViewModel
 import uk.co.coinwatch.common.viewModels.from
@@ -38,42 +37,33 @@ class DefaultHomePresenter(
 ) : HomePresenter {
     private val bgScope = CoroutineScope(Dispatchers.Default)
     private val uiScope = CoroutineScope(Dispatchers.Main)
+    private var latestPage = 0
+    private var isLoadingNextPage = false
     private var markets = emptyList<Market>()
     private var searchTerm: String? = null
     private var searchMarkets = emptyList<Market>()
     private val searchFlow = MutableSharedFlow<String?>(
         extraBufferCapacity = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
+        onBufferOverflow = DROP_OLDEST
     )
 
     init {
         searchFlow
             .debounce(SEARCH_DEBOUNCE_MS)
             .flatMapLatest { term -> flow { emit(interactor.search(term)) } }
-            .onEach {
-                uiScope.launch {
-                    searchMarkets = it
-                    updateView()
-                }
-            }
+            .onEach { handleSearchResult(it) }
             .launchIn(bgScope)
     }
 
-
     override fun present() {
-        updateView()
-        bgScope.launch {
-            val newMarkets = interactor.fetchMarkets()
-            uiScope.launch {
-                markets = newMarkets
-                updateView()
-            }
-        }
+        latestPage = 0
+        updateView(loadingViewModel())
+        bgScope.launch { handleNewMarkets(interactor.fetchMarkets()) }
     }
 
     override fun handle(event: HomePresenterEvent) = when (event) {
         is HomePresenterEvent.Reload -> present()
-        is HomePresenterEvent.LoadNextPage -> TODO("Load next page")
+        is HomePresenterEvent.LoadNextPage -> handleLoadNextPage()
         is HomePresenterEvent.Search -> handleSearch(event)
         is HomePresenterEvent.Navigate -> handleNavigate(event)
     }
@@ -89,13 +79,42 @@ class DefaultHomePresenter(
         bgScope.launch { searchFlow.emit(event.term) }
     }
 
-    private fun updateView() =
-        view.get()?.update(viewModel())
+    private fun handleSearchResult(markets: List<Market>) = uiScope.launch {
+        searchMarkets = markets
+        updateView(loadedViewModel())
+    }
 
-    private fun viewModel(): HomeViewModel =
-        if (markets.isEmpty()) HomeViewModel.Loading
-        else HomeViewModel.Loaded(
-            if (searchTerm.isNullOrEmpty()) markets.map { MarketViewModel.from(it) }
-            else searchMarkets.map { MarketViewModel.from(it) }
-        )
+    private fun handleLoadNextPage() {
+        if (isLoadingNextPage) return
+        isLoadingNextPage = true
+        updateView(loadedViewModel())
+        bgScope.launch {
+            handleNextPageResult(interactor.fetchMarkets(latestPage + 1))
+        }
+    }
+
+    private fun handleNextPageResult(newMarkets: List<Market>) = uiScope.launch {
+        markets = markets + newMarkets
+        latestPage += 1
+        isLoadingNextPage = false
+        updateView(loadedViewModel())
+    }
+
+    private fun handleNewMarkets(newMarkets: List<Market>) = uiScope.launch {
+        markets = newMarkets
+        updateView(loadedViewModel())
+    }
+
+    private fun updateView(viewModel: HomeViewModel) =
+        view.get()?.update(viewModel)
+
+    private fun loadedViewModel(): HomeViewModel = HomeViewModel.Loaded(
+        if (searchTerm.isNullOrEmpty()) markets.map { MarketViewModel.from(it) }
+        else searchMarkets.map { MarketViewModel.from(it) }
+    )
+
+    private fun loadingViewModel(): HomeViewModel = HomeViewModel.Loading(
+        if (searchTerm.isNullOrEmpty()) markets.map { MarketViewModel.from(it) }
+        else searchMarkets.map { MarketViewModel.from(it) }
+    )
 }

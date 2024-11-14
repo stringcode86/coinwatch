@@ -10,16 +10,30 @@ import UIKit
 
 class CardCollectionViewController: UICollectionViewController,
                                     UICollectionViewDelegateFlowLayout {
+    
     private var cellSize: CGSize = .zero
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+        collectionView.refreshControl = UIRefreshControl()
+        collectionView.refreshControl?.addTarget(
+            self,
+            action: #selector(refreshAction(_:)),
+            for: .valueChanged
+        )
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         invalidateCellSizeCache()
+    }
+    
+    // MARK: - Actions
+    
+    @IBAction func refreshAction(_ sender: Any) {
+        
     }
 
     // MARK: - UICollecitonViewFlowDelegate

@@ -11,7 +11,7 @@ import shared
 
 class HomeViewController: CardCollectionViewController, HomeView {
     var presenter: HomePresenter!
-    private var viewModel: HomeViewModel = .Loading()
+    private var viewModel: HomeViewModel = .Loading(prev: [])
     private var searchController: UISearchController = .init()
     
     override func viewDidLoad() {
@@ -24,10 +24,12 @@ class HomeViewController: CardCollectionViewController, HomeView {
     // MARK: - HomeView
     
     func update(viewModel_ viewModel: HomeViewModel) {
+        print("viewModel \(type(of: viewModel)) \(viewModel.markets().count)")
         self.viewModel = viewModel
         self.collectionView.performBatchUpdates { [weak self] in
             self?.collectionView.reloadSections(IndexSet(integer: 0))
         }
+        updateRefreshController(for: viewModel)
     }
     
     // MARK: - UICollectionViewDataSource
@@ -40,20 +42,15 @@ class HomeViewController: CardCollectionViewController, HomeView {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return (viewModel as? HomeViewModel.Loaded)?.markets.count ?? 0
+        return viewModel.markets().count
     }
     
     override func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        
-        guard let vm = viewModel as? HomeViewModel.Loaded else {
-            fatalError("[HomeViewController] unexpected viewModel \(viewModel)")
-        }
-        
         return collectionView.dequeue(MarketViewCell.self, for: indexPath)
-            .update(vm.markets[indexPath.item])
+            .update(viewModel.markets()[indexPath.item])
     }
     
     override func collectionView(
@@ -63,6 +60,21 @@ class HomeViewController: CardCollectionViewController, HomeView {
         presenter.handle(event_: .Navigate(markIdx: indexPath.item.int32))
     }
     
+    // MARK: - UIScrollViewDelegate
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let sv = scrollView
+        if sv.contentOffset.y >= sv.contentSize.height - sv.bounds.height {
+            presenter.handle(event_: .LoadNextPage())
+        }
+    }
+    
+    // MARK: - Actions
+    
+    @IBAction override func refreshAction(_ sender: Any) {
+        presenter.handle(event_: .Reload())
+    }
+
     // MARK: - Utils
 
     private func configureUI() {
@@ -74,6 +86,18 @@ class HomeViewController: CardCollectionViewController, HomeView {
         searchController.searchBar.searchBarStyle = .minimal
         searchController.searchResultsUpdater = self
         navigationItem.searchController = searchController
+    }
+    
+    private func updateRefreshController(for viewModel: HomeViewModel) {
+        let isRefreshing = collectionView.refreshControl?.isRefreshing ?? false
+        
+        if ((viewModel as? HomeViewModel.Loading) != nil) && !isRefreshing {
+            collectionView.refreshControl?.beginRefreshing()
+        }
+        
+        if ((viewModel as? HomeViewModel.Loaded) != nil) && isRefreshing {
+            collectionView.refreshControl?.endRefreshing()
+        }
     }
 }
 

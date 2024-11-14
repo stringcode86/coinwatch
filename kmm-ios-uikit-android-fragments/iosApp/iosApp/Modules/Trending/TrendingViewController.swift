@@ -59,4 +59,10 @@ class TrendingViewController: CardCollectionViewController, TrendingView {
         return collectionView.dequeue(MarketViewCell.self, for: indexPath)
                 .update(vm.markets[indexPath.item])
     }
+    
+    // MARK: - Actions
+    
+    override func refreshAction(_ sender: Any) {
+        presenter.handle(event___: .Reload())
+    }
 }
