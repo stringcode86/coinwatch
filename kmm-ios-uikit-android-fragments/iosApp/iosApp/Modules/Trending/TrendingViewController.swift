@@ -9,7 +9,7 @@
 import UIKit
 import shared
 
-class TrendingViewController: UICollectionViewController, TrendingView, UICollectionViewDelegateFlowLayout {
+class TrendingViewController: CardCollectionViewController, TrendingView {
     var presenter: TrendingPresenter!
     private var viewModel: TrendingViewModel = .Loading()
     private var cellSize: CGSize = .zero
@@ -17,13 +17,7 @@ class TrendingViewController: UICollectionViewController, TrendingView, UICollec
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Trending"
-        navigationController?.navigationBar.prefersLargeTitles = true
         presenter.present()
-    }
-
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        invalidateCellSizeCache()
     }
 
     // MARK: - TrendingView
@@ -57,31 +51,12 @@ class TrendingViewController: UICollectionViewController, TrendingView, UICollec
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
+        
         guard let vm = viewModel as? TrendingViewModel.Loaded else {
             fatalError("[TrendingViewController] unexpected viewModel \(viewModel)")
         }
+        
         return collectionView.dequeue(MarketViewCell.self, for: indexPath)
                 .update(vm.markets[indexPath.item])
-    }
-
-
-    // MARK: - UICollecitonViewFlowDelegate
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath
-    ) -> CGSize {
-        cellSize
-    }
-
-    // MARK: - Utils
-
-    private func invalidateCellSizeCache() {
-        let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
-        let inset = (layout?.sectionInset.left ?? 8) + (layout?.sectionInset.right ?? 8)
-        let spacing = layout?.minimumInteritemSpacing ?? 16
-        let lenght = floor((view.bounds.width - spacing - inset) / 2)
-        cellSize = .init(width: lenght, height: lenght)
     }
 }

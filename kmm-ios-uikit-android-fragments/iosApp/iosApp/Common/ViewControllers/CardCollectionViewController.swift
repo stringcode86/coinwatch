@@ -12,6 +12,11 @@ class CardCollectionViewController: UICollectionViewController,
                                     UICollectionViewDelegateFlowLayout {
     private var cellSize: CGSize = .zero
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         invalidateCellSizeCache()

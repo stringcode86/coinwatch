@@ -67,7 +67,6 @@ class HomeViewController: CardCollectionViewController, HomeView {
 
     private func configureUI() {
         navigationItem.title = "Coins"
-        navigationController?.navigationBar.prefersLargeTitles = true
     }
 
     private func configureSearchController() {
