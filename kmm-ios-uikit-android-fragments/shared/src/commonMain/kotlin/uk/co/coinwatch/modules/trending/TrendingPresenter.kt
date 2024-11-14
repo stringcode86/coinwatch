@@ -6,10 +6,13 @@ import kotlinx.coroutines.launch
 import uk.co.coinwatch.common.utils.WeakRef
 import uk.co.coinwatch.common.viewModels.MarketViewModel
 import uk.co.coinwatch.common.viewModels.from
+import uk.co.coinwatch.modules.home.HomePresenterEvent
+import uk.co.coinwatch.modules.home.HomeWireframeDestination
 import uk.co.coinwatch.services.coinGecko.model.Market
 
 sealed class TrendingPresenterEvent {
     object Reload: TrendingPresenterEvent()
+    data class Navigate(val markIdx: Int) : TrendingPresenterEvent()
 }
 
 interface TrendingPresenter {
@@ -28,24 +31,30 @@ class DefaultTrendingPresenter(
 
     override fun present() {
         updateView()
-        bgScope.launch {
-            val newMarkets = interactor.fetchTrending()
-            uiScope.launch {
-                markets = newMarkets
-                updateView()
-            }
-        }
+        bgScope.launch { handleNewMarkets(interactor.fetchTrending()) }
     }
 
-    override fun handle(event: TrendingPresenterEvent) {
-        println("[DefaultTrendingPresenter] handle $event")
+    override fun handle(event: TrendingPresenterEvent) = when (event) {
+        is TrendingPresenterEvent.Reload -> present()
+        is TrendingPresenterEvent.Navigate -> handleNavigate(event)
+    }
+
+    private fun handleNavigate(event: TrendingPresenterEvent.Navigate) {
+        val mrkt = markets[event.markIdx]
+        wireframe.navigate(
+            TrendingWireframeDestination.Market(mrkt.id, mrkt.image)
+        )
+    }
+
+    private fun handleNewMarkets(newMarkets: List<Market>) = uiScope.launch {
+        markets = newMarkets
+        updateView()
     }
 
     private fun updateView() =
         view.get()?.update(viewModel())
 
-    private fun viewModel(): TrendingViewModel {
-        return if (markets.isEmpty()) TrendingViewModel.Loading
+    private fun viewModel(): TrendingViewModel =
+        if (markets.isEmpty()) TrendingViewModel.Loading
         else TrendingViewModel.Loaded(markets.map { MarketViewModel.from(it)})
-    }
 }

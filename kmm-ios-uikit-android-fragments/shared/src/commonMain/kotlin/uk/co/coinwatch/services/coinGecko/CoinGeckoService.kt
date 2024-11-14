@@ -3,7 +3,6 @@ package uk.co.coinwatch.services.coinGecko
 import uk.co.coinwatch.services.coinGecko.model.Coin
 import uk.co.coinwatch.services.coinGecko.model.Market
 import io.ktor.client.HttpClient
-import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
@@ -12,19 +11,18 @@ import io.ktor.client.plugins.logging.SIMPLE
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
-import io.ktor.http.URLBuilder
 import io.ktor.http.encodeURLParameter
+import io.ktor.http.headers
 import io.ktor.http.withCharset
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.utils.io.charsets.Charsets
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.datetime.Instant
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.json.Json
-import uk.co.coinwatch.services.coinGecko.model.SearchResult
+import uk.co.coinwatch.services.coinGecko.model.CoinsResult
+import uk.co.coinwatch.services.coinGecko.model.TrendingResult
+import uk.co.coinwatch.shared.BuildKonfig
 
 /** Coin Gecko api service*/
 interface CoinGeckoService {
@@ -42,10 +40,14 @@ interface CoinGeckoService {
         change: String = "24h"
     ): List<Market>
     /**
+     * Search for coins
      * @param term - Search string
      */
     @Throws(Throwable::class)
     suspend fun search(term: String): List<Coin>
+    /** Trending coins */
+    @Throws(Throwable::class)
+    suspend fun trending(): List<Coin>
 }
 
 class DefaultCoinGeckoService : CoinGeckoService {
@@ -55,6 +57,7 @@ class DefaultCoinGeckoService : CoinGeckoService {
     private val client: HttpClient = HttpClient() {
         Logging { level = LogLevel.NONE; logger = Logger.SIMPLE }
         install(ContentNegotiation) { json(geckoJson, contentType()) }
+        headers { append("x-cg-demo-api-key", BuildKonfig.coinGeckoApiKey) }
     }
 
     @Throws(Throwable::class)
@@ -80,8 +83,17 @@ class DefaultCoinGeckoService : CoinGeckoService {
     override suspend fun search(term: String): List<Coin> = withContext(dispatcher) {
         val url = baseURL + "/search?query=" + term.encodeURLParameter()
         val bodyStr = client.get(url).bodyAsText()
-        val result = geckoJson.decodeFromString<SearchResult>(bodyStr)
+        val result = geckoJson.decodeFromString<CoinsResult>(bodyStr)
         return@withContext result.coins
+    }
+
+    @Throws(Throwable::class)
+    override suspend fun trending(): List<Coin> = withContext(dispatcher) {
+        val bodyStr = client.get(baseURL + "/search/trending").bodyAsText()
+        val result = geckoJson.decodeFromString<TrendingResult>(bodyStr)
+        return@withContext result.coins
+            .map { it.get("item") }
+            .filterNotNull()
     }
 
     private fun contentType(): ContentType {

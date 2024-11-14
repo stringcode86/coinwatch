@@ -16,7 +16,6 @@ class TrendingViewController: CardCollectionViewController, TrendingView {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Trending"
         presenter.present()
     }
 
@@ -39,25 +38,22 @@ class TrendingViewController: CardCollectionViewController, TrendingView {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        switch viewModel {
-        case let vm as TrendingViewModel.Loaded:
-            return vm.markets.count
-        default:
-            return 0
-        }
+        return viewModel.markets().count
     }
 
     override func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        
-        guard let vm = viewModel as? TrendingViewModel.Loaded else {
-            fatalError("[TrendingViewController] unexpected viewModel \(viewModel)")
-        }
-        
         return collectionView.dequeue(MarketViewCell.self, for: indexPath)
-                .update(vm.markets[indexPath.item])
+            .update(viewModel.markets()[indexPath.item])
+    }
+    
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        presenter.handle(event___: .Navigate(markIdx: indexPath.item.int32))
     }
     
     // MARK: - Actions

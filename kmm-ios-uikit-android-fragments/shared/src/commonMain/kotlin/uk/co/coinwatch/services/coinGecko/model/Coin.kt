@@ -17,4 +17,7 @@ data class Coin(
 }
 
 @Serializable
-data class SearchResult(val coins: List<Coin>)
+data class CoinsResult(val coins: List<Coin>)
+
+@Serializable
+data class TrendingResult(val coins: List<Map<String, Coin>>)

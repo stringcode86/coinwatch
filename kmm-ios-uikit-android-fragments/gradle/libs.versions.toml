@@ -9,6 +9,9 @@ kotlinxSerializationCore = "1.7.3"
 kotlinxDatetime = "0.6.1"
 coroutines = "1.9.0"
 ktor = "3.0.0"
+multiplatformSettings = "1.2.0"
+multiplatformSettingsTest = "1.2.0"
+buildKonfigV = "0.15.2"
 
 
 [libraries]
@@ -32,6 +35,8 @@ ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+multiplatform-settings-test = { module = "com.russhwolf:multiplatform-settings-test", version.ref = "multiplatformSettingsTest" }
+multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatformSettings" }
 
 
 [plugins]
@@ -42,3 +47,5 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinxSerializationPlugin" }
+buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfigV"}
+

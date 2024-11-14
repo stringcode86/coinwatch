@@ -15,7 +15,6 @@ class FavoriteViewController: CardCollectionViewController, FavoriteView {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Favorite"
         presenter.present()
     }
 

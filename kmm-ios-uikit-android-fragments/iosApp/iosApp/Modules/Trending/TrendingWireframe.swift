@@ -51,6 +51,7 @@ class DefaultTrendingWireframe: TrendingWireframe {
             wireframe: self
         )
         vc.presenter = presenter
+        self.vc = vc
         return UINavigationController(rootViewController: vc)
     }
 }

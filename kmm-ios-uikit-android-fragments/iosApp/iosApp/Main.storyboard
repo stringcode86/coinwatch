@@ -146,7 +146,7 @@
                         </connections>
                     </collectionView>
                     <tabBarItem key="tabBarItem" title="Coins" image="house" catalog="system" selectedImage="house.fill" id="TZs-fR-Ehu"/>
-                    <navigationItem key="navigationItem" id="3Bu-6p-eCK"/>
+                    <navigationItem key="navigationItem" title="Coins" id="3Bu-6p-eCK"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <segue destination="vk2-E5-1yA" kind="show" id="coJ-5S-c3n"/>
@@ -156,12 +156,12 @@
             </objects>
             <point key="canvasLocation" x="1541" y="-601"/>
         </scene>
-        <!--Item-->
+        <!--Trending-->
         <scene sceneID="teT-bO-t4h">
             <objects>
                 <navigationController id="5Ye-cG-Vmm" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="vyS-1s-QBb"/>
-                    <navigationItem key="navigationItem" id="U2a-NQ-p4f"/>
+                    <navigationItem key="navigationItem" title="Trending" id="U2a-NQ-p4f"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="Vjp-y6-PU3">
                         <rect key="frame" x="0.0" y="59" width="393" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -293,7 +293,7 @@
                         </connections>
                     </collectionView>
                     <tabBarItem key="tabBarItem" title="Trending" image="chart.line.uptrend.xyaxis" catalog="system" selectedImage="chart.line.uptrend.xyaxis" id="hSW-at-dQ3"/>
-                    <navigationItem key="navigationItem" id="Pg4-EC-YIe"/>
+                    <navigationItem key="navigationItem" title="Trending" id="Pg4-EC-YIe"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <segue destination="vk2-E5-1yA" kind="show" id="lOT-yS-cJM"/>
@@ -439,7 +439,7 @@
                         </connections>
                     </collectionView>
                     <tabBarItem key="tabBarItem" title="Favorite" image="star" catalog="system" selectedImage="star.fill" id="1fU-qz-Mve"/>
-                    <navigationItem key="navigationItem" id="1xC-tn-DS3"/>
+                    <navigationItem key="navigationItem" title="Favorite" id="1xC-tn-DS3"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <segue destination="vk2-E5-1yA" kind="show" id="qv8-dX-T9F"/>

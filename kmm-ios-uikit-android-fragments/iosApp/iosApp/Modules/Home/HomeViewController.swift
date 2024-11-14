@@ -16,7 +16,6 @@ class HomeViewController: CardCollectionViewController, HomeView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
         configureSearchController()
         presenter.present()
     }
@@ -24,7 +23,6 @@ class HomeViewController: CardCollectionViewController, HomeView {
     // MARK: - HomeView
     
     func update(viewModel_ viewModel: HomeViewModel) {
-        print("viewModel \(type(of: viewModel)) \(viewModel.markets().count)")
         self.viewModel = viewModel
         self.collectionView.performBatchUpdates { [weak self] in
             self?.collectionView.reloadSections(IndexSet(integer: 0))
@@ -76,10 +74,6 @@ class HomeViewController: CardCollectionViewController, HomeView {
     }
 
     // MARK: - Utils
-
-    private func configureUI() {
-        navigationItem.title = "Coins"
-    }
 
     private func configureSearchController() {
         searchController.searchBar.placeholder = "Search coins"

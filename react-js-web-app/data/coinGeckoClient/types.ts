@@ -46,7 +46,7 @@ export type NFT = {
     thumb?: string
 }
 
-export type SearchResult = {
+export type  SearchResult = {
     coins: Array<Coin>
     nfts: Array<NFT>
 }

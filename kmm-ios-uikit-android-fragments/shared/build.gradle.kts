@@ -1,7 +1,11 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.buildKonfig)
 }
 
 kotlin {
@@ -36,6 +40,8 @@ kotlin {
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.client.auth)
             implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.multiplatform.settings)
+            implementation(libs.multiplatform.settings.test)
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.okhttp)
@@ -49,6 +55,18 @@ kotlin {
         }
     }
 
+}
+
+buildkonfig {
+    packageName = "uk.co.coinwatch.shared"
+    exposeObjectWithName = "BuildKonfig"
+    defaultConfigs {
+        val properties = Properties().apply {
+            load(rootProject.file("local.properties").reader())
+        }
+        buildConfigField(Type.STRING, "coinGeckoApiKey", properties["uk.co.coinwatch.coinGeckoApiKey"] as String)
+        buildConfigField(Type.STRING, "sourceSet", "default")
+    }
 }
 
 android {

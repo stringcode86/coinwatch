@@ -21,7 +21,7 @@ three platforms. Uses Tamagui UIKit, Tanstack Query, Zustand. Review code
 - **iOS UIKit (with KMM)**. Kotlin multi-platform version of the app. Share core library that contains all the
 business logic written in Kotlin. Compiles native binary for each platform. Vends
 view models to thin UI Layer written in Swift leveraging UIKit. UI layer sends events
-to Core library. Apps uses Viper architecture. Code so clean it bring tears of joy to Uncle Bob's eye. Review
+to Core library. Apps use Viper architecture. Code so clean it bring tears of joy to Uncle Bob's eye. Review
 code [kmm-ios-uikit-android-fragments](./kmm-ios-uikit-android-fragments).
 
 
@@ -32,7 +32,7 @@ code [ios-swift-ui](./ios-swift-ui).
 - **Android View based (with KMM)** Kotlin multi-platform version of the app. Share core library that contains all the
 business logic written in Kotlin. Compiles native binary for each platform. Vends
 view models to thin UI Views layer, leveraging Fragment. UI layer sends events to
-Core library. Apps uses Viper architecture. Code so clean it bring tears of joy to Uncle Bob's eye. Review
+Core library. Apps use Viper architecture. Code so clean it bring tears of joy to Uncle Bob's eye. Review
 code [kmm-ios-uikit-android-fragments](./kmm-ios-uikit-android-fragments).
 
 
