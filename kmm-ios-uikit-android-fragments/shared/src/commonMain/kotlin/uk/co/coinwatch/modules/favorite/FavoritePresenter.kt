@@ -10,7 +10,7 @@ import uk.co.coinwatch.services.coinGecko.model.Market
 
 sealed class FavoritePresenterEvent {
     object Reload: FavoritePresenterEvent()
-    data class Search(val term: String?): FavoritePresenterEvent()
+    data class Navigate(val markIdx: Int): FavoritePresenterEvent()
 }
 
 interface FavoritePresenter {
@@ -29,24 +29,30 @@ class DefaultFavoritePresenter(
 
     override fun present() {
         updateView()
-        bgScope.launch {
-            val newMarkets = interactor.fetchFavorite()
-            uiScope.launch {
-                markets = newMarkets
-                updateView()
-            }
-        }
+        bgScope.launch { handleNewMarkets(interactor.fetchFavorite()) }
     }
 
-    override fun handle(event: FavoritePresenterEvent) {
-        println("[DefaultFavoritePresenter] handle $event")
+    override fun handle(event: FavoritePresenterEvent) = when (event) {
+        is FavoritePresenterEvent.Reload -> present()
+        is FavoritePresenterEvent.Navigate -> handleNavigate(event)
+    }
+
+    private fun handleNavigate(event: FavoritePresenterEvent.Navigate) {
+        val mrkt = markets[event.markIdx]
+        wireframe.navigate(
+            FavoriteWireframeDestination.Market(mrkt.id, mrkt.image)
+        )
+    }
+
+    private fun handleNewMarkets(newMarkets: List<Market>) = uiScope.launch {
+        markets = newMarkets
+        updateView()
     }
 
     private fun updateView() =
         view.get()?.update(viewModel())
 
-    private fun viewModel(): FavoriteViewModel {
-        return if (markets.isEmpty()) FavoriteViewModel.Loading
+    private fun viewModel(): FavoriteViewModel =
+        if (markets.isEmpty()) FavoriteViewModel.Loading
         else FavoriteViewModel.Loaded(markets.map { MarketViewModel.from(it)})
-    }
 }
