@@ -16,20 +16,24 @@ protocol FavoriteWireframeFactory: AnyObject {
 class DefaultFavoriteWireframeFactory: FavoriteWireframeFactory {
     private let marketDetailWireframeFactory: MarketDetailWireframeFactory
     private let coinGeckoService: CoinGeckoService
+    private let favoriteService: FavoriteService
     
     init(
         marketDetailWireframeFactory: MarketDetailWireframeFactory,
-        coinGeckoService: CoinGeckoService
+        coinGeckoService: CoinGeckoService,
+        favoriteService: FavoriteService
     ) {
         self.marketDetailWireframeFactory = marketDetailWireframeFactory
         self.coinGeckoService = coinGeckoService
+        self.favoriteService = favoriteService
     }
     
     func make(_ parent: UIViewController?) -> FavoriteWireframe {
         return DefaultFavoriteWireframe(
             parent,
             marketDetailWireframeFactory: marketDetailWireframeFactory,
-            coinGeckoService: coinGeckoService
+            coinGeckoService: coinGeckoService,
+            favoriteService: favoriteService
         )
     }
 }

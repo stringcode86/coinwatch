@@ -44,7 +44,9 @@ class DefaultTrendingWireframe: TrendingWireframe {
 
     private func wireUp() -> UIViewController {
         let vc: TrendingViewController = UIStoryboard(.main).instantiate()
-        let interactor = DefaultTrendingInteractor(service: coinGeckoService)
+        let interactor = DefaultTrendingInteractor(
+            service: coinGeckoService
+        )
         let presenter = DefaultTrendingPresenter(
             view: WeakRef(referred: vc),
             interactor: interactor,

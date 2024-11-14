@@ -12,17 +12,21 @@ import shared
 class DefaultFavoriteWireframe: FavoriteWireframe {
     private let marketDetailWireframeFactory: MarketDetailWireframeFactory
     private let coinGeckoService: CoinGeckoService
+    private let favoriteService: FavoriteService
     private weak var parent: UIViewController?
     private weak var vc: UIViewController?
 
     init(
         _ parent: UIViewController?,
         marketDetailWireframeFactory: MarketDetailWireframeFactory,
-        coinGeckoService: CoinGeckoService
+        coinGeckoService: CoinGeckoService,
+        favoriteService: FavoriteService
+
     ) {
         self.parent = parent
         self.marketDetailWireframeFactory = marketDetailWireframeFactory
         self.coinGeckoService = coinGeckoService
+        self.favoriteService = favoriteService
     }
 
     func present() {
@@ -44,7 +48,10 @@ class DefaultFavoriteWireframe: FavoriteWireframe {
 
     private func wireUp() -> UIViewController {
         let vc: FavoriteViewController = UIStoryboard(.main).instantiate()
-        let interactor = DefaultFavoriteInteractor(service: coinGeckoService)
+        let interactor = DefaultFavoriteInteractor(
+            coinGeckoService: coinGeckoService,
+            favoriteService: favoriteService
+        )
         let presenter = DefaultFavoritePresenter(
             view: WeakRef(referred: vc),
             interactor: interactor,

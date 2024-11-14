@@ -13,6 +13,7 @@ import shared
 // would be used in real project
 func bootstrap(_ window: UIWindow?) {
     let coinGeckoService = DefaultCoinGeckoService()
+    let favoriteService = DefaultFavoriteService()
     let marketDetailWireframeFactory = DefaultMarketDetailWireframeFactory(
         coinGeckoService: coinGeckoService
     )
@@ -22,7 +23,8 @@ func bootstrap(_ window: UIWindow?) {
     )
     let favoriteViewWireframeFactory = DefaultFavoriteWireframeFactory(
         marketDetailWireframeFactory: marketDetailWireframeFactory,
-        coinGeckoService: coinGeckoService
+        coinGeckoService: coinGeckoService,
+        favoriteService: favoriteService
     )
     let trendingViewWireframeFactory = DefaultTrendingWireframeFactory(
         marketDetailWireframeFactory: marketDetailWireframeFactory,
