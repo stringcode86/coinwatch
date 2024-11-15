@@ -12,17 +12,20 @@ import shared
 class DefaultMarketDetailWireframe: MarketDetailWireframe {
     private let context: MarketDetailWireframeContext
     private let coinGeckoService: CoinGeckoService
+    private let favoriteService: FavoriteService
     private weak var parent: UIViewController?
     private weak var vc: UIViewController?
 
     init(
         _ parent: UIViewController?,
         context: MarketDetailWireframeContext,
-        coinGeckoService: CoinGeckoService
+        coinGeckoService: CoinGeckoService,
+        favoriteService: FavoriteService
     ) {
         self.parent = parent
         self.context = context
         self.coinGeckoService = coinGeckoService
+        self.favoriteService = favoriteService
     }
     
     func present() {
@@ -31,12 +34,15 @@ class DefaultMarketDetailWireframe: MarketDetailWireframe {
     }
     
     func navigate(destination__ destination: MarketDetailWireframeDestination) {
-        
+        vc?.navigationController?.popViewController(animated: true)
     }
 
     private func wireUp() -> UIViewController {
         let vc: MarketDetailViewController = UIStoryboard(.main).instantiate()
-        let interactor = DefaultMarketDetailInteractor(service: coinGeckoService)
+        let interactor = DefaultMarketDetailInteractor(
+            coinGeckoService: coinGeckoService,
+            favoriteService: favoriteService
+        )
         let presenter = DefaultMarketDetailPresenter(
             view: WeakRef(referred: vc),
             interactor: interactor,

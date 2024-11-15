@@ -19,9 +19,14 @@ protocol MarketDetailWireframeFactory: AnyObject {
 class DefaultMarketDetailWireframeFactory: MarketDetailWireframeFactory {
     
     private let coinGeckoService: CoinGeckoService
+    private let favoriteService: FavoriteService
     
-    init(coinGeckoService: CoinGeckoService) {
+    init(
+        coinGeckoService: CoinGeckoService,
+        favoriteService: FavoriteService
+    ) {
         self.coinGeckoService = coinGeckoService
+        self.favoriteService = favoriteService
     }
     
     func make(
@@ -31,7 +36,8 @@ class DefaultMarketDetailWireframeFactory: MarketDetailWireframeFactory {
         return DefaultMarketDetailWireframe(
             parent,
             context: context,
-            coinGeckoService: coinGeckoService
+            coinGeckoService: coinGeckoService,
+            favoriteService: favoriteService
         )
     }
 }

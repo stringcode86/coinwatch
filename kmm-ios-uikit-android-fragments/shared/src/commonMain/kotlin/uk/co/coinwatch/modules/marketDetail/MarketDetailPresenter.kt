@@ -10,7 +10,8 @@ import uk.co.coinwatch.common.viewModels.from
 
 sealed class MarketDetailPresenterEvent {
     object Reload: MarketDetailPresenterEvent()
-    data class Search(val term: String?): MarketDetailPresenterEvent()
+    object ToggleFavorite: MarketDetailPresenterEvent()
+    object NavigateHome: MarketDetailPresenterEvent()
 }
 
 interface MarketDetailPresenter {
@@ -26,38 +27,39 @@ class DefaultMarketDetailPresenter(
 ): MarketDetailPresenter {
     private val bgScope = CoroutineScope(Dispatchers.Default)
     private val uiScope = CoroutineScope(Dispatchers.Main)
-    private var markets = emptyList<Market>()
+    private var market: Market? = null
 
     override fun present() {
-//        updateView()
-        mockUpdateView()
-        bgScope.launch {
-            val newMarkets = interactor.fetchMarket()
-            uiScope.launch {
-                markets = newMarkets
-//                updateView()
-                mockUpdateView()
-            }
-        }
+        updateView()
+        bgScope.launch { handleNewMarket(interactor.fetchMarket(context.id)) }
     }
 
-    override fun handle(event: MarketDetailPresenterEvent) {
-        println("[DefaultMarketPresenter] handle $event")
+    override fun handle(event: MarketDetailPresenterEvent) = when (event) {
+        is MarketDetailPresenterEvent.Reload -> present()
+        is MarketDetailPresenterEvent.ToggleFavorite -> handleToggleFavorite()
+        is MarketDetailPresenterEvent.NavigateHome -> handleNavigateHome()
     }
 
-    private fun mockUpdateView() =
-        view.get()?.update(
-            if (markets.isEmpty()) MarketDetailViewModel.Loading
-            else MarketDetailViewModel.Loaded(
-                MarketViewModel(context.id, context.id, context.imgUrl, null, null, null, null, null, null)
-            )
-        )
+    private fun handleToggleFavorite() {
+        interactor.toggleFavorite(context.id)
+        updateView()
+    }
+
+    private fun handleNewMarket(newMarket: Market) = uiScope.launch {
+        market = newMarket
+        updateView()
+    }
+
+    private fun handleNavigateHome() =
+        wireframe.navigate(MarketDetailWireframeDestination.Home)
 
     private fun updateView() =
         view.get()?.update(viewModel())
 
-    private fun viewModel(): MarketDetailViewModel {
-        return if (markets.isEmpty()) MarketDetailViewModel.Loading
-        else MarketDetailViewModel.Loaded(MarketViewModel.from(markets[0]))
-    }
+    private fun viewModel(): MarketDetailViewModel =
+        if (market == null) MarketDetailViewModel.Loading(context.imgUrl)
+        else MarketDetailViewModel.Loaded.from(
+            market!!,
+            interactor.isFavorite(context.id)
+        )
 }

@@ -15,7 +15,8 @@ func bootstrap(_ window: UIWindow?) {
     let coinGeckoService = DefaultCoinGeckoService()
     let favoriteService = DefaultFavoriteService()
     let marketDetailWireframeFactory = DefaultMarketDetailWireframeFactory(
-        coinGeckoService: coinGeckoService
+        coinGeckoService: coinGeckoService,
+        favoriteService: favoriteService
     )
     let homeViewWireframeFactory = DefaultHomeWireframeFactory(
         marketDetailWireframeFactory: marketDetailWireframeFactory,

@@ -7,8 +7,10 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import uk.co.coinwatch.services.coinGecko.DefaultCoinGeckoService
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
+import kotlin.test.assertTrue
 
 class CoinGeckoTests {
 
@@ -16,7 +18,9 @@ class CoinGeckoTests {
     fun testCoinsList() = runBlocking {
         val service = DefaultCoinGeckoService()
         val result = service.market(listOf("bitcoin"))
-        println("[HELLO TEST] ${result.size}")
-        println(result)
+        assertTrue(
+            result.isNullOrEmpty(),
+            "Empty markets"
+        )
     }
 }

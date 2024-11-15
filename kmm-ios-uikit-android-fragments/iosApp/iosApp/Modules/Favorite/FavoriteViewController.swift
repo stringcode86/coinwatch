@@ -13,8 +13,9 @@ class FavoriteViewController: CardCollectionViewController, FavoriteView {
     var presenter: FavoritePresenter!
     private var viewModel: FavoriteViewModel = .Loading()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         presenter.present()
     }
 
@@ -37,7 +38,7 @@ class FavoriteViewController: CardCollectionViewController, FavoriteView {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return (viewModel as? FavoriteViewModel.Loaded)?.markets.count ?? 0
+        return viewModel.markets().count
     }
 
     override func collectionView(
@@ -45,11 +46,14 @@ class FavoriteViewController: CardCollectionViewController, FavoriteView {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         
-        guard let vm = viewModel as? FavoriteViewModel.Loaded else {
-            fatalError("[FavoriteViewController] unexpected viewModel \(viewModel)")
-        }
-        
         return collectionView.dequeue(MarketViewCell.self, for: indexPath)
-            .update(vm.markets[indexPath.item])
+            .update(viewModel.markets()[indexPath.item])
+    }
+    
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        presenter.handle(event: .Navigate(markIdx: indexPath.item.int32))
     }
 }
